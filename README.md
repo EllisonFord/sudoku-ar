@@ -12,10 +12,10 @@ An application in C++ that uses OpenCV to solve Sudoku puzzles through Augmented
 
 ## Algorithm Breakdown
 1. The algorithm must find a good frame from the 9x9 to take a frame from
-2. Process the frame to extract the digits already in the sudoku
-3. Solve the sudoku by calling a function to do it that returns all of the 2D sudoku solved
-4. Compare the solved Sudoku with the unsolved one, and keep only the new values. This is done to ignore the already existing numbers
-5. Project the solutions on the paper
+1. Process the frame to extract the digits already in the sudoku
+1. Solve the sudoku by calling a function to do it that returns all of the 2D sudoku solved
+1. Compare the solved Sudoku with the unsolved one, and keep only the new values. This is done to ignore the already existing numbers
+1. Project the solutions on the paper
 
 
 ## Known Challenges
