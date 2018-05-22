@@ -3,7 +3,7 @@ Authors: x,x,x (up to 4 team members)
 
 
 ## Introduction
-An application in C++ that uses OpenCV to solve Sudoku puzzles through Augmented Reality (AR). Our project for the TUM course Augmented Reality by Prof. X
+An application in C++ that uses OpenCV to read an unsolved Sudoku puzzle, solves it using a Python library and then presents the results through Augmented Reality (AR). Our project for the TUM course Augmented Reality by Prof. X
 
 
 ## Usage
