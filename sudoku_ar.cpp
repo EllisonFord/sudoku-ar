@@ -3,7 +3,7 @@
 //  / ___|| | | |  _ \ / _ \| |/ | | | | / \  | _  \
 //  \___ \| | | | | | | | | | ' /| | | |/ _ \ | |_) |
 //   ___) | |_| | |_| | |_| | . \| |_| / ___ \| _  <
-//  |____/ \___/|____/ \___/|_|\_\\___/ _/ \_ |_|\_ \
+//	|____/ \___/|____/ \___/|_|\_\\___/ _/ \_ |_|\_ \
 //
 // Its BGR instead of RGB
 /////////////////////////////////////////////////////////
@@ -20,7 +20,6 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
-#include "sudoku_ar.h"
 using namespace std;
 using namespace cv;
 
@@ -48,11 +47,11 @@ void checkStream(VideoCapture& vid) {
 int main(int argc, char* argv[])
 {
 	VideoCapture vid(source_stream);
-	
+
 	checkStream(vid);
-	
+
 	Mat source, gray, filtered;
-	
+
 	const string kWinSource = "Colour Feed";
 	const string kWinGray = "Gray Scale Image";
 	const string kWinFiltered = "Filtered Stream";
@@ -60,6 +59,8 @@ int main(int argc, char* argv[])
 	namedWindow(kWinSource, WINDOW_FREERATIO);
 	namedWindow(kWinGray, WINDOW_FREERATIO);
 	namedWindow(kWinFiltered, WINDOW_FREERATIO);
+
+	int waitInt = 1000 / fps; // this determines the frames per second
 
 	while (vid.read(source)) {
 
@@ -79,7 +80,7 @@ int main(int argc, char* argv[])
 		imshow(kWinGray, gray);
 		imshow(kWinFiltered, filtered);
 
-		int key = waitKey(1000/fps); // this determines the frames per second
+		int key = waitKey(waitInt);
 		if (key == 27) break;
 
 	}
