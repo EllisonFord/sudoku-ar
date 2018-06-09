@@ -60,9 +60,9 @@ int main(int argc, char** argv)
 			// Video feed
 			//sudokuAR.initVideoStream("video/MarkerMovie.mp4");
 			
-			//sudokuAR.initVideoStream("video/large_sudoku.mov");
+			sudokuAR.initVideoStream("video/large_sudoku_clip.mp4");
 			//sudokuAR.initVideoStream("video/multiple_sudoku.mov");
-			sudokuAR.initVideoStream("video/thick_sudoku.mov");
+			//sudokuAR.initVideoStream("video/thick_sudoku_clip.mp4");
 		}
 		else if (c == 'c' || c == 'C')
 		{

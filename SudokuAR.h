@@ -55,14 +55,19 @@ private:
 	////////////////////////////////////////////////////////////////////////
 
 	// Contours
-	cv::Mat tmpMat;
-	IplImage tmpIpl;
-	CvMemStorage* m_memStorage = NULL; // we initialize it in the constructor
-	CvSeq* m_contours;
-	CvSeq* m_approx;
+	//cv::Mat tmpMat;
+	//IplImage tmpIpl;
+	//CvMemStorage* m_memStorage = NULL; // we initialize it in the constructor
+	//CvSeq* m_contours;
+	//CvSeq* m_approx;
+	std::vector<std::vector<cv::Point>> m_contours; // Vector for storing contour
+	std::vector<cv::Vec4i> m_hierarchy;
+	std::vector<cv::Point> m_approx;
+	std::vector<cv::Point> m_approxChild;
+	
 	cv::Mat m_result;
 	cv::Rect m_boundingBox;
-	const cv::Point *m_square;
+	cv::Point *m_sudokuCorners;
 	cv::Mat m_sudoku;
 
 	static const int numberOfSides;
@@ -83,22 +88,23 @@ private:
 	int m_markerAngle;
 	int m_distanceToMarkerInCm;
 
+	cv::Mat m_subimages[81];
+	bool m_subimagesIsImage[81];
+	
+
 	////////////////////////////////////////////////////////////////////////
 
 	static void onBlockSizeSlider(int, void*);
 
-	void findMarkers();
+	cv::Point* findSudoku();
 	void processCorners();
 	void computeStripe(double dx, double dy);
 	cv::Point2f computeAccurateDelimiter(cv::Point p);
 	cv::Point2f computeSobel(cv::Point p);
 	int subpixSampleSafe(const cv::Mat& gray, const cv::Point2f& p);
-	void findMarkerCenter();
-	void identifyMarker();
-	void perspectiveTransform();
-	bool isBorderBlack();
-	void computeMarkerId();
-	void estimateMarkerPose();
+	void perspectiveTransform(const cv::Point* corners);
+	void orientSudokuCorners();
+	void extractSubimages();
 
 	////////////////////////////////////////////////////////////////////////
 
