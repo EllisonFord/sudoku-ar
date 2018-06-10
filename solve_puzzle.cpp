@@ -9,6 +9,14 @@ using namespace std;
 bool FindUnassignedLocation(int grid[N][N], int &row, int &col);
 bool isSafe(int grid[N][N], int row, int col, int num);
 
+int[] rowMajor(int grid[][]{
+    
+    
+    
+    return 0;
+    
+}
+
 /* assign values to all unassigned locations for Sudoku solution
  */
 bool SolveSudoku(int grid[N][N])
@@ -90,7 +98,8 @@ void printGrid(int grid[N][N])
 
 int main()
 {
-    int grid[N][N] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
+    int grid[N][N] = {
+        {3, 0, 6, 5, 0, 8, 4, 0, 0},
         {5, 2, 0, 0, 0, 0, 0, 0, 0},
         {0, 8, 7, 0, 0, 0, 0, 3, 1},
         {0, 0, 3, 0, 1, 0, 0, 8, 0},
