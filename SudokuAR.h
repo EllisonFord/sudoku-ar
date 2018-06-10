@@ -7,8 +7,8 @@
 
 #include <iomanip>
 
-#include "opencv2\highgui.hpp"
-#include "opencv2\imgproc.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/imgproc.hpp"
 //#include <opencv2\imgproc\imgproc_c.h>
 #include <iostream>
 #include <stdlib.h>
@@ -113,13 +113,12 @@ private:
 	static const std::string grayWindow;
 	static const std::string adaptiveThresholdWindow;
 	static const std::string resultsWindow;
-	static const std::string markerWindow;
+	static const std::string sudokuWindow;
 	static const std::string trackbarsWindow;
 
 	static const std::string thresholdTrackbarName;
 	static const std::string blockSizeTrackbarName;
 	static const std::string constTrackbarName;
-	static const std::string markerThresholdTrackbarName;
 
 	static const std::string houghThresholdTrackbarName;
 	static const std::string minLineLengthTrackbarName;

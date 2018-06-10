@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 
-#include "opencv2\highgui.hpp"
-#include "opencv2\imgproc.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/imgproc.hpp"
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
@@ -59,10 +59,12 @@ int main(int argc, char** argv)
 		{
 			// Video feed
 			//sudokuAR.initVideoStream("video/MarkerMovie.mp4");
-			
-			sudokuAR.initVideoStream("video/large_sudoku_clip.mp4");
-			//sudokuAR.initVideoStream("video/multiple_sudoku.mov");
-			//sudokuAR.initVideoStream("video/thick_sudoku_clip.mp4");
+
+			//sudokuAR.initVideoStream("video/large_sudoku.mov");
+			//sudokuAR.initVideoStream("video/large_sudoku_clip.mp4");
+
+			sudokuAR.initVideoStream("video/thick_sudoku_clip.mp4");
+			//sudokuAR.initVideoStream("video/thick_sudoku.mov");
 		}
 		else if (c == 'c' || c == 'C')
 		{
