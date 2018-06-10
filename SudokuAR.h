@@ -82,6 +82,7 @@ private:
 	cv::Mat m_lineParamsMat;
 
 	cv::Point2f m_corners[4];
+	cv::Point* m_square;
 	cv::Point m_markerCenter;
 	cv::Mat m_iplMarker;
 	int m_markerCode;
@@ -105,6 +106,8 @@ private:
 	void perspectiveTransform(const cv::Point* corners);
 	void orientSudokuCorners();
 	void extractSubimages();
+	cv::Mat fineCrop(const cv::Mat& img);
+	bool isBorderPixel(cv::Point p, cv::Size imgSize);
 
 	////////////////////////////////////////////////////////////////////////
 

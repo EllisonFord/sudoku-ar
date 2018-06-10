@@ -12,10 +12,6 @@
 #include "SudokuAR.h"
 
 
-
-
-
-
 /* 
 A. Detect sudoku grid
 	A.1 Convert the webcam image in gray color
@@ -38,9 +34,6 @@ C.
 */
 
 
-
-
-
 int main(int argc, char** argv)
 {
 
@@ -61,9 +54,9 @@ int main(int argc, char** argv)
 			//sudokuAR.initVideoStream("video/MarkerMovie.mp4");
 
 			//sudokuAR.initVideoStream("video/large_sudoku.mov");
-			//sudokuAR.initVideoStream("video/large_sudoku_clip.mp4");
+			sudokuAR.initVideoStream("video/large_sudoku_clip.mp4");
 
-			sudokuAR.initVideoStream("video/thick_sudoku_clip.mp4");
+			//sudokuAR.initVideoStream("video/thick_sudoku_clip.mp4");
 			//sudokuAR.initVideoStream("video/thick_sudoku.mov");
 		}
 		else if (c == 'c' || c == 'C')
