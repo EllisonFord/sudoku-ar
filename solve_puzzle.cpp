@@ -5,26 +5,43 @@
 using namespace std;
 #define UNASSIGNED 0
 #define N 9
+#define NN 81
 
 bool FindUnassignedLocation(int grid[N][N], int &row, int &col);
 bool isSafe(int grid[N][N], int row, int col, int num);
 
-int[] rowMajor(int grid[][]{
-    
-    
-    
-    return 0;
-    
+// Converts the 2D input array to a 1D array
+void rowMajor(int grid[N][N], int row_sudoku[N])
+{
+    for (int q{0}; q < N; q++){
+        for (int t{0}; t < N; t++){
+            row_sudoku[q * N + t] = grid[q][t];
+        }
+    }
 }
+
+// Converts the 1D array to a 9x9 matrix
+void row2matrix(int row_sudoku[N], int grid[N][N])
+{
+    for (int q{0}; q < N; q++){
+        for (int t{0}; t < N; t++){
+            grid[q][t] = row_sudoku[q * N + t];
+        }
+    }
+}
+
+
+
 
 /* assign values to all unassigned locations for Sudoku solution
  */
+
 bool SolveSudoku(int grid[N][N])
 {
     int row, col;
     if (!FindUnassignedLocation(grid, row, col))
         return true;
-    for (int num = 1; num <= 9; num++)
+    for (int num = 1; num <= N; num++)
     {
         if (isSafe(grid, row, col, num))
         {
@@ -96,6 +113,15 @@ void printGrid(int grid[N][N])
     }
 }
 
+void print1D(int input[NN])
+{
+    cout << "Sudoku in Row Major: ";
+    for (int i{0}; i < NN; i += 1) {
+        cout << input[i];
+    }
+    cout << endl;
+}
+
 int main()
 {
     int grid[N][N] = {
@@ -108,10 +134,21 @@ int main()
         {1, 3, 0, 0, 0, 0, 2, 5, 0},
         {0, 0, 0, 0, 0, 0, 0, 7, 4},
         {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+    
+    cout << "Input Puzzle: " << endl;
+    printGrid(grid);
+    cout << endl;
+    
+    int row_grid[NN];
+    
+    rowMajor(grid, row_grid);
+    print1D(row_grid);
+    cout << endl;
+    
+    cout << "Result puzzle: " << endl;
     if (SolveSudoku(grid) == true)
         printGrid(grid);
     else
-        cout<<"No solution exists"<<endl;
-    
+        cout << "No solution exists" << endl;
     
 }
