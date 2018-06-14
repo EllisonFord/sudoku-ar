@@ -35,7 +35,6 @@ def scramble_dataset(list):
 # Iterates through the directories and returns pairs of x and y
 def read():
     x_and_y = []
-
     for i in range(0, 9):
         for image in os.listdir(dir_and_digit()[i][0]):
             path = os.path.join(dir_path, "digits/" + str(i+1) + "/" + image)
@@ -53,20 +52,10 @@ def split_dataset(list_in):
 
 # Returns list of tuples:
 def load_dataset():
-
     sorted_tuples = read()
-
-    print(type(sorted_tuples))
-
     shuffled_tuples = scramble_dataset(sorted_tuples)
-
     train, test = split_dataset(shuffled_tuples)
-
     return train, test
 
 
 
-load_dataset()
-
-
-# print("Digit is", dir_and_digit()[8][1], ", Data size:", len(os.listdir(dir_and_digit()[8][0])))

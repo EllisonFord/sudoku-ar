@@ -12,6 +12,7 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
 from preparing_dataset import *
+from preparing_dataset import *
 
 batch_size = 128
 num_classes = 9 # was 10
@@ -22,22 +23,18 @@ img_rows, img_cols = 28, 28 # adjust to new pixel size 128x128 for this dataset
 
 # the data, split between train and test sets
 #(x_train, y_train), (x_test, y_test) = mnist.load_data()
-(x_train, y_train), (x_test, y_test) = prepare_dataset()
+#(x_train, y_train), (x_test, y_test) = load_dataset()
 
-print(x_train[0])
+train_set = load_dataset()[0]
+test_set = load_dataset()[1]
 
-print(type(x_train[0]))
+x_train = train_set[0]
+y_train = train_set[1]
 
-
-for x in x_train:
-    print(x)
-
-for y in y_test:
-    print(y)
+x_test = test_set[0]
+y_test = train_set[1]
 
 
-
-"""
 
 if K.image_data_format() == 'channels_first':
     x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
@@ -84,4 +81,3 @@ model.fit(x_train, y_train,
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
-"""
