@@ -29,7 +29,13 @@ def resize_img(input_img):
 # Randomise the list of tuples
 def scramble_dataset(list):
     np.random.shuffle(list)
-    return list
+    x = []
+    y = []
+    for x_item in list:
+        x.append(x_item)
+    for y_item in list:
+        y.append(y_item)
+    return np.asanyarray(x), np.asanyarray(y)
 
 
 # Iterates through the directories and returns pairs of x and y
@@ -53,9 +59,8 @@ def split_dataset(list_in):
 # Returns list of tuples:
 def load_dataset():
     sorted_tuples = read()
-    shuffled_tuples = scramble_dataset(sorted_tuples)
-    train, test = split_dataset(shuffled_tuples)
-    return train, test
+    x, y = scramble_dataset(sorted_tuples)
 
+    print(type(x))
 
-
+    return x, y
