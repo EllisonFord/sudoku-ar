@@ -22,16 +22,10 @@ img_rows, img_cols = 28, 28 # adjust to new pixel size 128x128 for this dataset
 
 # the data, split between train and test sets
 #(x_train, y_train), (x_test, y_test) = mnist.load_data()
-#(x_train, y_train), (x_test, y_test) = load_dataset()
+(x_train, y_train), (x_test, y_test) = load_dataset()
 
-train_set = load_dataset()[0]
-test_set = load_dataset()[1]
-
-x_train = train_set[0]
-y_train = train_set[1]
-
-x_test = test_set[0]
-y_test = train_set[1]
+x_train, y_train = load_dataset()
+x_test, y_test = load_dataset()
 
 
 
