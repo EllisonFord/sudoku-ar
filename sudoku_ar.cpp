@@ -8,11 +8,11 @@
 //  OpenCV: Its BGR instead of RGB!						//
 //////////////////////////////////////////////////////////
 //														//
-// Authors: (whomever finished the damn thing!)			//
+//  Authors: (whomever finished the damn thing!)        //
 //														//
-// Module: Augmented Reality (IN2018) at the TUM		//
-// Prof.: Dr. Klinker									//
-// Sup.: M.Sc. Langbein									//
+//  Module: Augmented Reality (IN2018) at the TUM       //
+//  Prof.: Dr. Klinker									//
+//  Sup.: M.Sc. Langbein                                //
 //														//
 //////////////////////////////////////////////////////////
 
@@ -20,6 +20,7 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
+#include "opencv2/imgproc/imgproc.hpp"
 using namespace std;
 using namespace cv;
 
@@ -50,14 +51,20 @@ int main(int argc, char* argv[])
 
 	checkStream(vid);
 
-	Mat source, gray, filtered;
 
+	// Original camera feed
+	Mat source;
 	const string kWinSource = "Colour Feed";
-	const string kWinGray = "Gray Scale Image";
-	const string kWinFiltered = "Filtered Stream";
-
 	namedWindow(kWinSource, WINDOW_FREERATIO);
+
+	// Gray scale feed/temp
+	Mat gray;
+	const string kWinGray = "Gray Scale Image";
 	namedWindow(kWinGray, WINDOW_FREERATIO);
+
+	// Threshold feed
+	Mat filtered;
+	const string kWinFiltered = "Filtered Stream";
 	namedWindow(kWinFiltered, WINDOW_FREERATIO);
 
 	int waitInt = 1000 / fps; // this determines the frames per second
@@ -75,6 +82,10 @@ int main(int argc, char* argv[])
 		adaptiveThreshold(gray, filtered, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, 33, 5);
 		//adaptiveThreshold(gray, filtered, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 33, 5);
 
+		cout << "Shit" << endl;
+
+		//findContours(filtered, RETR_LIST, CHAIN_APPROX_NONE);
+		
 		// Open 3 different windows
 		imshow(kWinSource, source);
 		imshow(kWinGray, gray);
