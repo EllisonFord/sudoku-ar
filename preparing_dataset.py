@@ -20,6 +20,24 @@ def dir_and_digit():
         dir_and_digit.append((os.path.join(dir_path, "digits/"+str(dir)+"/"), dir))
     return dir_and_digit
 
+def resize(image):
+    return cv2.resize(image, (28, 28))
+
+def threshold(image):
+
+    #cv2.imshow("Original in", image)
+    #cv2.waitKey(0)
+
+    #th, dst = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY)
+    #cv2.imshow("Thresholded Image", th)
+    #cv2.waitKey(0)
+
+    #cv2.imshow("DST Image", dst)
+    #cv2.waitKey(0)
+
+
+    #cv2.destroyAllWindows()
+    return image #change to th or whatever
 
 # Resize any image to the constants specified above
 def resize_img(input_img):
@@ -35,17 +53,33 @@ def scramble_dataset(list):
         x.append(x_item)
     for y_item in list:
         y.append(y_item)
-    return np.asanyarray(x), np.asanyarray(y)
+    return np.asanyarray(x)[0], np.asanyarray(y)[0]
 
 
 # Iterates through the directories and returns pairs of x and y
 def read():
-    x_and_y = []
+
+    x = []
+    y = []
+
+    #some_image = None
+
     for i in range(0, 9):
         for image in os.listdir(dir_and_digit()[i][0]):
             path = os.path.join(dir_path, "digits/" + str(i+1) + "/" + image)
-            x_and_y.append((cv2.imread(path, 0), dir_and_digit()[i][1]))
-    return np.asanyarray(x_and_y)
+
+
+            image = cv2.imread(path, 0)
+            image = resize(image)
+
+            x.append(image)
+            y.append(dir_and_digit()[i][1])
+            #some_image = image
+            #image = threshold(image)
+            #x_and_y.append((image, dir_and_digit()[i][1]))
+
+#    threshold(some_image)
+    return np.asanyarray(x), np.asanyarray(y)
 
 
 # Divides the dataset into Training and Test sets and returns (x_train, y_train), (x_test, y_test)
@@ -58,9 +92,7 @@ def split_dataset(list_in):
 
 # Returns list of tuples:
 def load_dataset():
-    sorted_tuples = read()
-    x, y = scramble_dataset(sorted_tuples)
-
-    print(type(x))
-
+    x, y = read()
+    #x, y = scramble_dataset(sorted_tuples)
+    #split
     return x, y
