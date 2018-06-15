@@ -23,27 +23,22 @@ img_rows, img_cols = 28, 28 # adjust to new pixel size 128x128 for this dataset
 
 # the data, split between train and test sets
 #(x_train, y_train), (x_test, y_test) = mnist.load_data()
-#(x_train, y_train), (x_test, y_test) = load_dataset()
+(x_train, y_train), (x_test, y_test) = load_dataset()
 
 
-x_train, y_train = load_dataset()
-x_test, y_test = x_train, y_train
 
-"""
 print("Type:", type(x_train))
-print("List:", x_train)
+#print("List:", x_train)
 print("Len:", len(x_train))
 print("Shape:", x_train.shape)
 
 
 print("\nType 2:", type(x_train[0]))
-print("List 2:", x_train[0])
+#print("List 2:", x_train[0])
 print("Len 2:", len(x_train[0]))
 
 
 print("Shape:", x_train.shape[0])
-"""
-
 
 if K.image_data_format() == 'channels_first':
     x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
