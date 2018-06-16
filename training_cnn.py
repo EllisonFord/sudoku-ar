@@ -73,5 +73,9 @@ score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-model.save_weights("char74k_trained.h5")
+# Saving the weights
+model.save_weights("char74k_weights.h5")
 
+# Saving the network architecture
+with open("char74k_architecture.json", "w") as f:
+    f.write(model.to_json())

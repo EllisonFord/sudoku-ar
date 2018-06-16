@@ -10,7 +10,7 @@ digit_w, digit_h = 28, 28 # used to be (128, 128)
 dir_path = os.path.dirname(__file__)
 X = W = 0
 Y = H = 1
-THRESHOLD_VAL = 100
+THRESHOLD_VAL = 50
 
 
 # FUNCTIONS
@@ -65,7 +65,7 @@ def read():
 # Divides the dataset into Training and Test sets and returns (x_train, y_train), (x_test, y_test)
 def split_dataset(list_in):
 
-    train, test = list_in[:8000, :], list_in[8000:,:]
+    train, test = list_in[:6000, :], list_in[6000:,:]
 
     x_train = []
     y_train = []
