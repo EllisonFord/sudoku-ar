@@ -27,19 +27,6 @@ img_rows, img_cols = 28, 28 # adjust to new pixel size 128x128 for this dataset
 
 
 
-print("Type:", type(x_train))
-#print("List:", x_train)
-print("Len:", len(x_train))
-print("Shape:", x_train.shape)
-
-
-print("\nType 2:", type(x_train[0]))
-#print("List 2:", x_train[0])
-print("Len 2:", len(x_train[0]))
-
-
-print("Shape:", x_train.shape[0])
-
 if K.image_data_format() == 'channels_first':
     x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
     x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)
@@ -85,3 +72,5 @@ model.fit(x_train, y_train,
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
+
+model.save_weights("char74k_trained.h5")

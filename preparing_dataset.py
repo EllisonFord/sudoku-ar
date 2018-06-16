@@ -2,7 +2,7 @@ import random
 import cv2
 import os
 import numpy as np
-
+import h5py
 
 # CONSTANTS
 # This will resize the images, and the NN will adapt to this too
@@ -94,5 +94,3 @@ def load_dataset():
     unsorted_tuples = scramble_dataset(sorted_tuples)
     return split_dataset(unsorted_tuples)
 
-
-load_dataset()
