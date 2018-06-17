@@ -10,7 +10,7 @@ digit_w, digit_h = 28, 28 # used to be (128, 128)
 dir_path = os.path.dirname(__file__)
 X = W = 0
 Y = H = 1
-THRESHOLD_VAL = 50
+THRESHOLD_VAL = 100
 
 
 # FUNCTIONS
@@ -28,19 +28,13 @@ def resize(image):
     return cv2.resize(image, (digit_w, digit_h))
 
 def threshold(image):
-    return cv2.threshold(image, THRESHOLD_VAL, 255, cv2.THRESH_BINARY_INV)[1]
+    #return cv2.threshold(image, THRESHOLD_VAL, 255, cv2.THRESH_BINARY_INV)[1]
+    return cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 33, 5)
 
 
 # Randomise the list of tuples
 def scramble_dataset(list):
     np.random.shuffle(list)
-    #x = []
-    #y = []
-    #for x_item in list[0]:
-    #    x.append(x_item)
-    #for y_item in list[1]:
-    #    y.append(y_item)
-    #return np.asanyarray(x), np.asanyarray(y)
     return list
 
 
@@ -54,11 +48,9 @@ def read():
             path = os.path.join(dir_path, "digits/" + str(i+1) + "/" + image)
             image = cv2.imread(path, 0)
             image = resize(image)
-            # image = threshold(image)
             x.append(image)
             y.append(dir_and_digit()[i][1])
             list.append((image, dir_and_digit()[i][1]))
-#    return (np.asanyarray(x), np.asanyarray(y))
     return np.asanyarray(list)
 
 
