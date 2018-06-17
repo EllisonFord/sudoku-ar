@@ -9,7 +9,7 @@ digit_w, digit_h = 28, 28 # used to be (128, 128)
 dir_path = os.path.dirname(__file__)
 X = W = 0
 Y = H = 1
-THRESHOLD_VAL = 100
+THRESHOLD_VAL = 126
 
 
 # FUNCTIONS
@@ -29,8 +29,8 @@ def resize(image):
 
 
 def threshold(image):
-    #return cv2.threshold(image, THRESHOLD_VAL, 255, cv2.THRESH_BINARY_INV)[1]
-    return cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 33, 5)
+    return cv2.threshold(image, THRESHOLD_VAL, 255, cv2.THRESH_BINARY_INV)
+    #return cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 33, 5)
 
 
 # Randomise the list of tuples
@@ -49,6 +49,7 @@ def read():
             path = os.path.join(dir_path, "cnn_train_digits/" + str(i+1) + "/" + image)
             image = cv2.imread(path, 0)
             image = resize(image)
+            ret, image = threshold(image)
             x.append(image)
             y.append(dir_and_digit()[i][1])
             list.append((image, dir_and_digit()[i][1]))
@@ -57,26 +58,19 @@ def read():
 
 # Divides the dataset into Training and Test sets and returns (x_train, y_train), (x_test, y_test)
 def split_dataset(list_in):
-
     train, test = list_in[:6000, :], list_in[6000:, :]
-
     x_train = []
     y_train = []
     x_test = []
     y_test = []
-
     for x in train:
         x_train.append(x[0])
-
     for y in train:
         y_train.append(y[1])
-
     for x in test:
         x_test.append(x[0])
-
     for y in test:
         y_test.append(y[1])
-
     return (np.asanyarray(x_train), np.asanyarray(y_train)), (np.asanyarray(x_test), np.asanyarray(y_test))
 
 
@@ -94,5 +88,6 @@ def load_dataset():
     return split_dataset(unsorted_tuples)
 
 
-def nothing(x):
+# NEEDED FOR THE TRACKBAR
+def nothing():
     pass
