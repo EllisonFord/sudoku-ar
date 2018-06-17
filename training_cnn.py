@@ -25,7 +25,7 @@ img_rows, img_cols = 28, 28 # adjust to new pixel size 128x128 for this dataset
 (x_train, y_train), (x_test, y_test) = load_dataset()
 #(x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-see_samples(x_train, y_train)
+#see_samples(x_train, y_train)
 
 
 if K.image_data_format() == 'channels_first':
@@ -52,7 +52,7 @@ print("YTrain:", y_train)
 y_test = keras.utils.np_utils.to_categorical(y_test, num_classes)
 print("Ytest: ", y_test)
 
-"""
+
 model = Sequential()
 model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
@@ -65,6 +65,9 @@ model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
 
+print(model.summary())
+
+"""
 model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta(),
               metrics=['accuracy'])

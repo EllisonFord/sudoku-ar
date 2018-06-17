@@ -97,5 +97,5 @@ def load_dataset():
 
 
 # NEEDED FOR THE TRACKBAR
-def nothing():
+def nothing(x):
     pass
