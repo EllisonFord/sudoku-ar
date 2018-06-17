@@ -9,7 +9,7 @@ digit_w, digit_h = 28, 28 # used to be (128, 128)
 dir_path = os.path.dirname(__file__)
 X = W = 0
 Y = H = 1
-THRESHOLD_VAL = 126
+THRESHOLD_VAL = 123
 
 
 # FUNCTIONS
@@ -40,10 +40,11 @@ def scramble_dataset(list):
 
 
 def prepare_image(image):
-    # blur
     image = resize(image)
+    #image = cv2.medianBlur(image, 3)
     ret, image = threshold(image)
     return image
+
 
 # Iterates through the directories and returns pairs of x and y
 def read():
@@ -71,13 +72,13 @@ def split_dataset(list_in):
     x_test = []
     y_test = []
     for x in train:
-        x_train.append(x[0])
+        x_train.append(x[X])
     for y in train:
-        y_train.append(y[1])
+        y_train.append(y[Y])
     for x in test:
-        x_test.append(x[0])
+        x_test.append(x[X])
     for y in test:
-        y_test.append(y[1])
+        y_test.append(y[Y])
     return (np.asanyarray(x_train), np.asanyarray(y_train)), (np.asanyarray(x_test), np.asanyarray(y_test))
 
 

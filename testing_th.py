@@ -5,15 +5,18 @@ from preparing_dataset import *
 kNW_FindParams = 'Optimise'
 cv2.namedWindow(kNW_FindParams)
 cv2.resizeWindow(kNW_FindParams, 400, 400)
+cv2.moveWindow(kNW_FindParams, 600, 300)
 
 # CREATING THE TRACKBARS
-cv2.createTrackbar('Gauss Blur', kNW_FindParams, 0, 255, nothing)
+cv2.createTrackbar('Gauss Blur', kNW_FindParams, 1, 5, nothing)
 cv2.createTrackbar('Threshold', kNW_FindParams, 0, 255, nothing)
 cv2.createTrackbar('Blocksize', kNW_FindParams, 0, 255, nothing)
 cv2.createTrackbar('C', kNW_FindParams, 0, 255, nothing)
 
 # LOAD AN IMAGE
 img = cv2.imread("/home/master/sudoku-ar/extracted_numbers/only_nums/12.png", 0)
+
+# th == 154 or 123 when medianBlur(3)
 
 # START THE SLIDER
 while(1):
@@ -24,15 +27,17 @@ while(1):
     bs = cv2.getTrackbarPos('Blocksize', kNW_FindParams)
     c = cv2.getTrackbarPos('C', kNW_FindParams)
 
+    if gb % 2 == 1:
+        img = cv2.medianBlur(img, gb)
 
-    #cv2.
-
-    ret, thresh = cv2.threshold(img, th, 255, cv2.THRESH_BINARY_INV)
+    ret, out_img = cv2.threshold(img, th, 255, cv2.THRESH_BINARY_INV)
     #thresh = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, bs, c)
 
 
 
-    cv2.imshow(kNW_FindParams, thresh)
+    enlarged_th = cv2.resize(out_img, (200, 200))
+
+    cv2.imshow(kNW_FindParams, enlarged_th)
     k = cv2.waitKey(1) & 0xFF
     if k == 27:
         break
