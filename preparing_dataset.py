@@ -39,6 +39,12 @@ def scramble_dataset(list):
     return list
 
 
+def prepare_image(image):
+    # blur
+    image = resize(image)
+    ret, image = threshold(image)
+    return image
+
 # Iterates through the directories and returns pairs of x and y
 def read():
     x = []
@@ -47,12 +53,13 @@ def read():
     for i in range(0, 9):
         for image in os.listdir(dir_and_digit()[i][0]):
             path = os.path.join(dir_path, "cnn_train_digits/" + str(i+1) + "/" + image)
+
             image = cv2.imread(path, 0)
-            image = resize(image)
-            ret, image = threshold(image)
+            image = prepare_image(image)
             x.append(image)
             y.append(dir_and_digit()[i][1])
             list.append((image, dir_and_digit()[i][1]))
+
     return np.asanyarray(list)
 
 
