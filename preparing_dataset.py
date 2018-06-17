@@ -1,8 +1,7 @@
-import random
 import cv2
 import os
 import numpy as np
-import h5py
+
 
 # CONSTANTS
 # This will resize the images, and the NN will adapt to this too
