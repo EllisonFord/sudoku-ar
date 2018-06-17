@@ -20,7 +20,7 @@ def dir_and_digit():
     # Will be appended for every digit
     dir_and_digit = []
     for dir in directories:
-        dir_and_digit.append((os.path.join(dir_path, "digits/"+str(dir)+"/"), dir))
+        dir_and_digit.append((os.path.join(dir_path, "cnn_train_digits/"+str(dir)+"/"), dir))
     return dir_and_digit
 
 

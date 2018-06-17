@@ -6,7 +6,7 @@ Gets to 99.25% test accuracy after 12 epochs
 
 from __future__ import print_function
 import keras
-#from keras.datasets import mnist
+from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
@@ -23,6 +23,9 @@ img_rows, img_cols = 28, 28 # adjust to new pixel size 128x128 for this dataset
 
 # the data, split between train and test sets
 (x_train, y_train), (x_test, y_test) = load_dataset()
+#(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+see_samples(x_train, y_train)
 
 
 if K.image_data_format() == 'channels_first':
@@ -44,8 +47,12 @@ print(x_test.shape[0], 'test samples')
 
 # convert class vectors to binary class matrices
 y_train = keras.utils.np_utils.to_categorical(y_train, num_classes)
-y_test = keras.utils.np_utils.to_categorical(y_test, num_classes)
+print("YTrain:", y_train)
 
+y_test = keras.utils.np_utils.to_categorical(y_test, num_classes)
+print("Ytest: ", y_test)
+
+"""
 model = Sequential()
 model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
@@ -77,3 +84,4 @@ model.save_weights("char74k_weights.h5")
 # Saving the network architecture
 with open("char74k_architecture.json", "w") as f:
     f.write(model.to_json())
+"""

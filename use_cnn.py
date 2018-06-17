@@ -6,7 +6,7 @@ import glob
 
 
 def read_images():
-    test_images = [cv2.imread(file, 0) for file in glob.glob("extracted_numbers/only_nums/*.png")]
+    test_images = [prepare_image(cv2.imread(file, 0)) for file in glob.glob("extracted_numbers/only_nums/*.png")]
     return np.asanyarray(test_images)
 
 
