@@ -4,24 +4,42 @@ import cv2
 from keras import backend as K
 
 
+cv2.namedWindow('Optimise')
 
-#cv2.createTrackbar("Threshold Trackbar", "Thresholded", 100, 255)
+cv2.createTrackbar('Threshold', 'Optimise', 0, 255, nothing)
+cv2.createTrackbar('Gauss Blur', 'Optimise', 0, 255, nothing)
+cv2.createTrackbar('Blocksize', 'Optimise', 0, 255, nothing)
+cv2.createTrackbar('C', 'Optimise', 0, 255, nothing)
 
-digit = cv2.imread("/Users/Sam/Desktop/numbers/gray/23.png", 0)
+img = cv2.imread("/Users/Sam/sudoku-ar/extracted_numbers/only_nums/12.png", 0)
 
-board = cv2.imread("/Users/Sam/Desktop/sudaca.png", 0)
+while(1):
+    cv2.imshow('Optimise', img)
+    k = cv2.waitKey(1) & 0xFF
+    if k == 27:
+        break
 
-board = cv2.medianBlur(board, 5)
+    # get current positions of four trackbars
+    th = cv2.getTrackbarPos('Threshold','Optimise')
+    gb = cv2.getTrackbarPos('Gauss Blur','Optimise')
+    bs = cv2.getTrackbarPos('Blocksize','Optimise')
+    c = cv2.getTrackbarPos('C','Optimise')
 
-test_th = threshold(digit)
-board_th = threshold(board)
+    img[:] = [th]
+
+cv2.destroyAllWindows()
 
 
-cv2.imshow("Original", digit)
-cv2.imshow("Thresholded", test_th)
 
-cv2.imshow("Original Board", board)
-cv2.imshow("Thresholded Board", board_th)
+
+
+
+"""
+input_imgs = []
+
+input_imgs.append(test_th)
+
+input_imgs = np.asanyarray(input_imgs)
 
 
 
@@ -29,14 +47,6 @@ cv2.imshow("Thresholded Board", board_th)
 with open("char74k_architecture.json", "r") as f:
     model = model_from_json(f.read())
 model.load_weights("char74k_weights.h5")
-
-input_imgs = []
-
-
-input_imgs.append(test_th)
-
-input_imgs = np.asanyarray(input_imgs)
-
 
 if K.image_data_format() == 'channels_first':
     x_test = input_imgs.reshape(input_imgs.shape[0], 1, 28, 28)
@@ -49,10 +59,13 @@ x_test = x_test.astype('float32')
 x_test /= 255
 
 predictions = model.predict(x_test, verbose=True)
-predicted_classes = model.predict_classes(x_test)
+predicted_classes = model.predict_classes(x_test, verbose=True)
+
 
 print(predictions)
 print(predicted_classes)
 
+
 cv2.waitKey()
 cv2.destroyAllWindows()
+"""
