@@ -3,9 +3,10 @@ import os
 import numpy as np
 from keras.datasets import mnist
 
+
 # CONSTANTS
 # This will resize the images, and the NN will adapt to this too
-digit_w, digit_h = 28, 28 # used to be (128, 128)
+digit_w, digit_h = 28, 28  # used to be (128, 128)
 dir_path = os.path.dirname(__file__)
 X = W = 0
 Y = H = 1
