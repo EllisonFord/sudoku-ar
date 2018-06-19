@@ -114,8 +114,10 @@ def split_dataset_comb(list_in):
 # Visualise 10 items from the dataset about to train
 def see_samples(x, y):
     for i in range(10):
-        cv2.imshow(str(y[i]), x[i])
+        win_name = str(y[i])
+        cv2.imshow(win_name, x[i])
         cv2.waitKey()
+        cv2.destroyWindow(win_name)
 
 
 # Returns list of tuples:

@@ -36,13 +36,13 @@ predicted_classes = model.predict_classes(x_test)
 
 # SHOW IMAGES AND PREDICTIONS
 for i, img in enumerate(predicted_classes):
-
-    cv2.namedWindow(str(img))
-    cv2.moveWindow(str(img), 700, 400)
+    win_name = "Prediction: " + str(img)
+    cv2.namedWindow(win_name)
+    cv2.moveWindow(win_name, 700, 400)
     enlarged_im = cv2.resize(input_imgs[i], (200, 200))
-    cv2.imshow(str(img), enlarged_im)
+    cv2.imshow(win_name, enlarged_im)
     cv2.waitKey()
-    cv2.destroyWindow(str(img))
+    cv2.destroyWindow(win_name)
 
 
 
