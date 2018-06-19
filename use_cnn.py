@@ -25,10 +25,10 @@ x_test /= 255
 
 
 # LOAD THE NETWORK
-with open("char74k_architecture.json", "r") as f:
+with open("char74k_architecture_comb.json", "r") as f:
     model = model_from_json(f.read())
 # Loading the weights
-model.load_weights("char74k_weights.h5")
+model.load_weights("char74k_weights_comb.h5")
 
 
 # RUN and STORE PREDICTIONS
