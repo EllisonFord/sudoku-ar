@@ -22,10 +22,11 @@ epochs = 12
 img_rows, img_cols = 28, 28 # adjust to new pixel size 128x128 for this dataset
 
 # the data, split between train and test sets
-(x_train, y_train), (x_test, y_test) = load_dataset()
-#(x_train, y_train), (x_test, y_test) = mnist.load_data()
+# (x_train, y_train), (x_test, y_test) = load_dataset()
+(x_train, y_train), (x_test, y_test) = load_combined_dataset()
+# (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-#see_samples(x_train, y_train)
+# see_samples(x_train, y_train)
 
 
 if K.image_data_format() == 'channels_first':
@@ -67,7 +68,7 @@ model.add(Dense(num_classes, activation='softmax'))
 
 print(model.summary())
 
-"""
+
 model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta(),
               metrics=['accuracy'])
@@ -82,9 +83,8 @@ print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
 # Saving the weights
-model.save_weights("char74k_weights.h5")
+model.save_weights("char74k_weights_comb.h5")
 
 # Saving the network architecture
-with open("char74k_architecture.json", "w") as f:
+with open("char74k_architecture_comb.json", "w") as f:
     f.write(model.to_json())
-"""

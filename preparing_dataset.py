@@ -1,7 +1,7 @@
 import cv2
 import os
 import numpy as np
-
+from keras.datasets import mnist
 
 # CONSTANTS
 # This will resize the images, and the NN will adapt to this too
@@ -82,6 +82,35 @@ def split_dataset(list_in):
     return (np.asanyarray(x_train), np.asanyarray(y_train)), (np.asanyarray(x_test), np.asanyarray(y_test))
 
 
+def split_dataset_comb(list_in):
+    train, test = list_in[:6000, :], list_in[6000:, :]
+    (x_train_mn, y_train_mn), (x_test_mn, y_test_mn) = mnist.load_data()
+    x_train = []
+    y_train = []
+    x_test = []
+    y_test = []
+    for x in train:
+        x_train.append(x[X])
+    for y in train:
+        y_train.append(y[Y])
+    for x in test:
+        x_test.append(x[X])
+    for y in test:
+        y_test.append(y[Y])
+
+    x_train = np.asanyarray(x_train)
+    y_train = np.asanyarray(y_train)
+    x_test = np.asanyarray(x_test)
+    y_test = np.asanyarray(y_test)
+
+    x_train = np.concatenate((x_train, x_train_mn))
+    y_train = np.concatenate((y_train, y_train_mn))
+    x_test = np.concatenate((x_test, x_test_mn))
+    y_test = np.concatenate((y_test, y_test_mn))
+
+    return (x_train, y_train), (x_test, y_test)
+
+
 # Visualise 10 items from the dataset about to train
 def see_samples(x, y):
     for i in range(10):
@@ -96,6 +125,13 @@ def load_dataset():
     return split_dataset(unsorted_tuples)
 
 
+def load_combined_dataset():
+    sorted_tuples = read()
+    unsorted_tuples = scramble_dataset(sorted_tuples)
+    return split_dataset_comb(unsorted_tuples)
+
+
 # NEEDED FOR THE TRACKBAR
 def nothing(x):
     pass
+
