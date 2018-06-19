@@ -19,6 +19,11 @@ def dir_and_digit():
     return dir_and_digit
 
 
+# NEEDED FOR THE TRACK BAR
+def nothing(x):
+    pass
+
+
 def resize(image):
     return cv2.resize(image, (digit_w, digit_h))
 
@@ -57,7 +62,7 @@ def read_dirs():
 
 
 # Divides the dataset into Training and Test sets and returns (x_train, y_train), (x_test, y_test)
-def split_dataset(list_in, combined=True):
+def split_dataset(list_in, combined=True, exclude_label=None):
     train, test = list_in[:6000, :], list_in[6000:, :]
 
     x_train = []
@@ -98,20 +103,21 @@ def see_samples(x, y):
 
 
 # Returns list of tuples:
-def load_our_dataset(dataset='combination'):
+def load_our_dataset(dataset='combination', exclude=None):
 
+    # Read the Directories with the CHAR74k images stored
     sorted_tuples = read_dirs()
+
+    # Scramble their order
     unsorted_tuples = scramble_dataset(sorted_tuples)
 
     if dataset is 'combination':
-        return split_dataset(unsorted_tuples, combined=True)
+        return split_dataset(unsorted_tuples, combined=True, exclude_label=exclude)
     if dataset is 'char74k':
-        return split_dataset(unsorted_tuples, combined=False)
+        return split_dataset(unsorted_tuples, combined=False, exclude_label=exclude)
     if dataset is 'mnist':
-        return mnist.load_data()
-
-
-# NEEDED FOR THE TRACK BAR
-def nothing(x):
-    pass
-
+        if exclude is not None:
+            # TODO: EXCLUDE ALGORITHM HERE
+            return mnist.load_data()
+        else:
+            return mnist.load_data()

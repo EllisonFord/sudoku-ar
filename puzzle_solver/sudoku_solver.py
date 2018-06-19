@@ -13,7 +13,6 @@ def unseen_digits(seen_digits):
     return unseen_set
 
 
-
 # Returns a list with the whole row
 def return_row(sudoku, i):
     return sudoku[i]
@@ -25,7 +24,6 @@ def return_column(sudoku, j):
     for item in sudoku:
         column.append(item[j])
     return column
-
 
 
 # this has to check row, column and mini_box and determine whether there is only 1 possible value to put in the box
@@ -42,8 +40,6 @@ def single_solution(row, column, mini_box):
         return True, common[0]
     else:
         return False, False
-
-
 
 
 # Returns 1 of the 9 possible mini boxes in the puzzle
@@ -147,6 +143,4 @@ def solve_sudoku(infile, outfile):
 
 #print("The program needed", iteration(), "iterations.")
 
-
 solve_sudoku(infile="solved_sudoku", outfile="solved_sudoku")
-
