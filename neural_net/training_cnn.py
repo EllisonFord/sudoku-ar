@@ -13,16 +13,14 @@ from keras import backend as K
 from preparing_dataset import *
 from params import *
 
+
 # the data, split between train and test sets
-(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset='mnist', exclude=0)  # Train using a combination of MNIST and Char74k
+(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset='mnist', exclude=None)  # Train using a combination of MNIST and Char74k
+
 
 # Uncomment below if you would like to see what the net is going to train on.
-
-
-
-
-
 see_samples(x_train, y_train)
+
 
 if K.image_data_format() == 'channels_first':
     x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)

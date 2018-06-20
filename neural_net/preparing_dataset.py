@@ -65,13 +65,13 @@ def exclusions(exclude_label, x_train, y_train, x_test, y_test):
 
     for i, item in enumerate(y_train):
         if item == exclude_label:
-            print("Deleting Train", exclude_label)
+            #print("Deleting Train", exclude_label)
             np.delete(x_train, i)
             np.delete(y_train, i)
 
     for i, item in enumerate(y_test):
         if item == exclude_label:
-            print("Deleting", exclude_label)
+            #print("Deleting", exclude_label)
             np.delete(x_test, i)
             np.delete(y_test, i)
 
