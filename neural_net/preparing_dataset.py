@@ -61,6 +61,23 @@ def read_dirs():
     return np.asanyarray(list)
 
 
+def exclusions(exclude_label, x_train, y_train, x_test, y_test):
+
+    for i, item in enumerate(y_train):
+        if item == exclude_label:
+            print("Deleting Train", exclude_label)
+            np.delete(x_train, i)
+            np.delete(y_train, i)
+
+    for i, item in enumerate(y_test):
+        if item == exclude_label:
+            print("Deleting", exclude_label)
+            np.delete(x_test, i)
+            np.delete(y_test, i)
+
+    return x_train, y_train, x_test, y_test
+
+
 # Divides the dataset into Training and Test sets and returns (x_train, y_train), (x_test, y_test)
 def split_dataset(list_in, combined=True, exclude_label=None):
     train, test = list_in[:6000, :], list_in[6000:, :]
@@ -83,12 +100,17 @@ def split_dataset(list_in, combined=True, exclude_label=None):
     x_test = np.asanyarray(x_test)
     y_test = np.asanyarray(y_test)
 
+    # This adds MNIST to the loaded dataset
     if combined is True:
         (x_train_mn, y_train_mn), (x_test_mn, y_test_mn) = mnist.load_data()
         x_train = np.concatenate((x_train, x_train_mn))
         y_train = np.concatenate((y_train, y_train_mn))
         x_test = np.concatenate((x_test, x_test_mn))
         y_test = np.concatenate((y_test, y_test_mn))
+
+    # If exclude was chosen, it calls a function to remove labels
+    if exclude_label is not None:
+        x_train, y_train, x_test, y_test = exclusions(exclude_label, x_train, y_train, x_test, y_test)
 
     return (x_train, y_train), (x_test, y_test)
 
@@ -117,7 +139,8 @@ def load_our_dataset(dataset='combination', exclude=None):
         return split_dataset(unsorted_tuples, combined=False, exclude_label=exclude)
     if dataset is 'mnist':
         if exclude is not None:
-            # TODO: EXCLUDE ALGORITHM HERE
-            return mnist.load_data()
+            (x_train, y_train), (x_test, y_test) = mnist.load_data()
+            x_train, y_train, x_test, y_test = exclusions(exclude, x_train, y_train, x_test, y_test)
+            return (x_train, y_train), (x_test, y_test)
         else:
             return mnist.load_data()
