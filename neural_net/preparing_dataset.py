@@ -2,7 +2,7 @@ import cv2
 import os
 import numpy as np
 from keras.datasets import mnist
-from params import *
+from neural_net.params import *
 
 # CONSTANTS
 # This will resize the images, and the NN will adapt to this too
@@ -65,6 +65,18 @@ def exclusions(exclude_label, x_train, y_train, x_test, y_test):
 
     for i, item in enumerate(y_train):
         if item == exclude_label:
+            #x_train[i] = 0
+            x_train[i] = np.zeros([img_cols, img_rows], dtype=np.uint8)
+            x_train[i].fill(0)
+
+    for i, item in enumerate(y_test):
+        if item == exclude_label:
+            x_test[i] = np.zeros([img_cols, img_rows], dtype=np.uint8)
+            x_test[i].fill(0)
+
+    """
+    for i, item in enumerate(y_train):
+        if item == exclude_label:
             #print("Deleting Train", exclude_label)
             np.delete(x_train, i)
             np.delete(y_train, i)
@@ -74,6 +86,7 @@ def exclusions(exclude_label, x_train, y_train, x_test, y_test):
             #print("Deleting", exclude_label)
             np.delete(x_test, i)
             np.delete(y_test, i)
+    """
 
     return x_train, y_train, x_test, y_test
 

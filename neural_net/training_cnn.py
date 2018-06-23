@@ -10,16 +10,15 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
-from preparing_dataset import *
-from params import *
-
+from neural_net.preparing_dataset import *
+from neural_net.params import *
 
 # the data, split between train and test sets
-(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset='mnist', exclude=None)  # Train using a combination of MNIST and Char74k
+(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset='combination', exclude=0)  # Train using a combination of MNIST and Char74k
 
 
 # Uncomment below if you would like to see what the net is going to train on.
-see_samples(x_train, y_train)
+# see_samples(x_train, y_train)
 
 
 if K.image_data_format() == 'channels_first':

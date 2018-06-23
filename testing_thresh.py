@@ -1,4 +1,7 @@
-from preparing_dataset import *
+from neural_net.preparing_dataset import *
+from os import path
+
+dir_path = path.dirname(__file__)
 
 
 # PREPARING THE WINDOW
@@ -14,7 +17,7 @@ cv2.createTrackbar('Blocksize', kNW_FindParams, 0, 255, nothing)
 cv2.createTrackbar('C', kNW_FindParams, 0, 255, nothing)
 
 # LOAD AN IMAGE
-img = cv2.imread("/home/master/sudoku-ar/extracted_numbers/only_nums/12.png", 0)
+img = cv2.imread(dir_path + "extracted_numbers/only_nums/75.png", 0)
 
 # th == 154 or 123 when medianBlur(3)
 
