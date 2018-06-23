@@ -15,3 +15,6 @@ X = W = 0
 Y = H = 1
 
 THRESHOLD_VAL = 123
+
+GRAYSCALE = 0
+LEN = 0
