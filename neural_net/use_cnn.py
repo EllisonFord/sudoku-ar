@@ -1,9 +1,10 @@
 from keras.models import model_from_json
-from neural_net.preparing_dataset import *
+from preparing_dataset import *
 import cv2
 from keras import backend as k
 import glob
-from neural_net.params import *
+from params import *
+
 from keras.applications.imagenet_utils import decode_predictions
 
 
@@ -32,13 +33,6 @@ def predict(input_imgs):
     # RUN and KEEP PREDICTIONS
     predicted_classes = model.predict_classes(x_test)
 
-    probabilities = model.predict(x_test)
-
-    #for item in predicted_classes:
-    #    print(item)
-
-    #decode_predictions(probabilities)
-
     return predicted_classes
 
 
@@ -55,9 +49,12 @@ def disp_predictions(input_imgs, predictions):
 
 
 #  Takes in imags list, returns predicted classes
-def cpp_sudoku_call(read_imgs):
-    th_imgs = [prepare_image(cv2.imread(im, GRAYSCALE)) for im in read_imgs]
+def cpp_sudoku_call(imgs_list):
+    th_imgs = [prepare_image(cv2.imread(im, GRAYSCALE)) for im in imgs_list]
     predicted_classes = predict(th_imgs)
+
+    print(type(predicted_classes))
+
     return predicted_classes
 
 
@@ -68,7 +65,11 @@ def test_predictions(dir="../extracted_numbers/gray"):
     disp_predictions(imgs_array, prediction)
 
 
-test_predictions("../extracted_numbers/gray")
+# test_predictions(dir="../extracted_numbers/gray")
+
+im_list = read_images()
+
+cpp_sudoku_call()
 
 """ 
 EXTRA CODE

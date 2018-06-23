@@ -10,8 +10,20 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
-from neural_net.preparing_dataset import *
-from neural_net.params import *
+from preparing_dataset import *
+from params import *
+#from neural_net.preparing_dataset import *
+#from neural_net.params import *
+
+
+def save_model(model):
+    # Saving the weights
+    model.save_weights('trained_net/char74k_weights.h5')
+
+    # Saving the network architecture
+    with open('trained_net/char74k_architecture.json', 'w') as f:
+        f.write(model.to_json())
+
 
 # the data, split between train and test sets
 (x_train, y_train), (x_test, y_test) = load_our_dataset(dataset='combination', exclude=0)  # Train using a combination of MNIST and Char74k
@@ -70,9 +82,4 @@ score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-# Saving the weights
-model.save_weights("trained_net/char74k_weights.h5")
-
-# Saving the network architecture
-with open("trained_net/char74k_architecture.json", "w") as f:
-    f.write(model.to_json())
+save_model(model)

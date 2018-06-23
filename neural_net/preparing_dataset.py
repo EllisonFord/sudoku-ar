@@ -2,7 +2,7 @@ import cv2
 import os
 import numpy as np
 from keras.datasets import mnist
-from neural_net.params import *
+from params import *
 
 # CONSTANTS
 # This will resize the images, and the NN will adapt to this too
