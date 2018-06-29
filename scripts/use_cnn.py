@@ -4,6 +4,9 @@ import cv2
 from keras import backend as k
 import glob
 from params import *
+import os
+
+dir_path = os.path.dirname(__file__)
 
 from keras.applications.imagenet_utils import decode_predictions
 
@@ -24,11 +27,11 @@ def predict(input_imgs):
     x_test /= 255
 
     # LOAD THE NETWORK
-    with open("trained_net/char74k_architecture.json", "r") as f:
+    with open(dir_path+"/trained_net/char74k_architecture.json", "r") as f:
         model = model_from_json(f.read())
 
     # Loading the weights
-    model.load_weights("trained_net/char74k_weights.h5")
+    model.load_weights(dir_path+"/trained_net/char74k_weights.h5")
 
     # RUN and KEEP PREDICTIONS
     predicted_classes = model.predict_classes(x_test)
@@ -65,11 +68,11 @@ def test_predictions(dir="../extracted_numbers/gray"):
     disp_predictions(imgs_array, prediction)
 
 
-# test_predictions(dir="../extracted_numbers/gray")
+#test_predictions(dir="../extracted_numbers/gray")
 
-im_list = read_images()
+#im_list = read_images()
 
-cpp_sudoku_call()
+#cpp_sudoku_call()
 
 """ 
 EXTRA CODE

@@ -3,11 +3,11 @@
 
   <param name="initial_package" type="string" value="sudoku_ar"/>
   
-  <node pkg="sudoku_ar" name="publish_predictions.py" type="publish_predictions.py" output="screen" />
+  <node pkg="sudoku_ar" name="publish_predictions" type="publish_predictions.py" output="screen" />
 
-  <node pkg="sudoku_ar" name="publisher.py" type="publisher.py" output="screen" />
+  <node pkg="sudoku_ar" name="debug_publisher" type="publisher.py" output="screen" />
 
-  <node pkg="sudoku_ar" name="vision_node.cxx" type="vision_node" output="screen" />
+  <!--<node pkg="sudoku_ar" name="vision_node.cxx" type="vision_node" output="screen" />-->
 
 
 </launch>
