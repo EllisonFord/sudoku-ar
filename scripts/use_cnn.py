@@ -5,14 +5,14 @@ from keras import backend as k
 import glob
 from params import *
 import os
+#from keras.applications.imagenet_utils import decode_predictions
+
 
 dir_path = os.path.dirname(__file__)
 
-from keras.applications.imagenet_utils import decode_predictions
-
 
 def read_images(dir):
-    test_images = [prepare_image(cv2.imread(file, GRAYSCALE)) for file in glob.glob(dir+"/*.png")]
+    test_images = [prepare_image(cv2.imread(file, GRAYSCALE)) for file in glob.glob(dir+'/*.png')]
     return np.asanyarray(test_images)
 
 
@@ -27,11 +27,11 @@ def predict(input_imgs):
     x_test /= 255
 
     # LOAD THE NETWORK
-    with open(dir_path+"/trained_net/char74k_architecture.json", "r") as f:
+    with open(dir_path+'/trained_net/char74k_architecture.json', 'r') as f:
         model = model_from_json(f.read())
 
     # Loading the weights
-    model.load_weights(dir_path+"/trained_net/char74k_weights.h5")
+    model.load_weights(dir_path+'/trained_net/char74k_weights.h5')
 
     # RUN and KEEP PREDICTIONS
     predicted_classes = model.predict_classes(x_test)
@@ -42,7 +42,7 @@ def predict(input_imgs):
 def disp_predictions(input_imgs, predictions):
     # SHOW IMAGES AND PREDICTIONS
     for i, img in enumerate(predictions):
-        win_name = "Prediction: " + str(img)
+        win_name = 'Prediction: ' + str(img)
         cv2.namedWindow(win_name)
         cv2.moveWindow(win_name, 700, 400)
         enlarged_im = cv2.resize(input_imgs[i], (200, 200))
@@ -61,7 +61,7 @@ def cpp_sudoku_call(imgs_list):
     return predicted_classes
 
 
-def test_predictions(dir="../extracted_numbers/gray"):
+def test_predictions(dir='../extracted_numbers/gray'):
     # PROCESS THE IMAGES
     imgs_array = read_images(dir)
     prediction = predict(imgs_array)

@@ -6,7 +6,7 @@
 
 // Project Includes
 #include "main.h"
-
+#include "vision_node.cpp"
 
 
 int main(int argc, char* argv[]){

@@ -5,6 +5,7 @@
 
 using namespace cv;
 
+/*
 class SudokuROS
 {
 private:
@@ -12,6 +13,17 @@ private:
 public:
 
 };
+*/
+
+ros::NodeHandle r;
+ros::Publisher laser_scan_pub = r.advertise<sensor_msgs::LaserScan>("laser_scan", 81);
+
+void Callback(const nxt_msgs::Range  &msg)
+{
+  sensor_msgs::LaserScan pub;
+  laser_scan_pub.publish(pub);
+}
+
 
 
 int main(int argc, char** argv)
@@ -20,6 +32,11 @@ int main(int argc, char** argv)
 
   ros::NodeHandle nh;
 
+  ros::Subscriber sub = nh.subscribe("point_cloud", 81, Callback);
+
+  ros::spin();
+
+  /*
   image_transport::ImageTransport it(nh);
 
   auto pub = it.advertise("camera/image", 81);
@@ -41,4 +58,5 @@ int main(int argc, char** argv)
 
     loop_rate.sleep();
   }
+   */
 }
