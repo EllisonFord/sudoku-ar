@@ -14,8 +14,8 @@ bool isSafe(int grid[N][N], int row, int col, int num);
 // Converts the 2D input array to a 1D array
 void matrix2array(int grid[N][N], int row_sudoku[NN])
 {
-    for (int q{0}; q < N; q++){
-        for (int t{0}; t < N; t++){
+    for (int q =0; q < N; q++){
+        for (int t=0; t < N; t++){
             row_sudoku[q * N + t] = grid[q][t];
         }
     }
@@ -24,8 +24,8 @@ void matrix2array(int grid[N][N], int row_sudoku[NN])
 // Converts the 1D array to a 9x9 matrix
 void array2matrix(int row_sudoku[NN], int grid[N][N])
 {
-    for (int q{0}; q < N; q++){
-        for (int t{0}; t < N; t++){
+    for (int q=0; q < N; q++){
+        for (int t=0; t < N; t++){
             grid[q][t] = row_sudoku[q * N + t];
         }
     }
@@ -111,8 +111,8 @@ void printGrid(int grid[N][N])
 
 void print1D(int input[NN])
 {
-    cout << "Sudoku in Row Major: ";
-    for (int i{0}; i < NN; i += 1) {
+    //cout << "Sudoku in Row Major: ";
+    for (int i=0; i < NN; i += 1) {
         cout << input[i];
     }
     cout << endl;
@@ -128,36 +128,23 @@ void set_difference(const int& a[NN], const int& b[NN], int& c[NN]){
 }
 */
 
-/*
-void set_difference(const int& unsolved[NN], const int& solved[NN], int& difference[NN])
-{
 
-    array<int, NN> difference = unsolved;
+void set_difference(int unsolved[NN], int solved[NN], int difference[NN])
+{
+    for (int i = 0; i < NN; i += 1){
+        difference[i] = solved[i];
+    }
 
     for (int i = 0; i < NN; i += 1){
         if (unsolved[i] == solved[i]){
             difference[i] = 0;
         }
     }
-
-
-
 }
-*/
 
-void solve()
+
+int solve_puzzle(int input_grid[N][N])
 {
-    int input_grid[N][N] = {
-            {3, 0, 6, 5, 0, 8, 4, 0, 0},
-            {5, 2, 0, 0, 0, 0, 0, 0, 0},
-            {0, 8, 7, 0, 0, 0, 0, 3, 1},
-            {0, 0, 3, 0, 1, 0, 0, 8, 0},
-            {9, 0, 0, 8, 6, 3, 0, 0, 5},
-            {0, 5, 0, 0, 9, 0, 6, 0, 0},
-            {1, 3, 0, 0, 0, 0, 2, 5, 0},
-            {0, 0, 0, 0, 0, 0, 0, 7, 4},
-            {0, 0, 5, 2, 0, 6, 3, 0, 0}};
-
 
     // Turn into row
     int input_as_row[NN];
@@ -165,7 +152,7 @@ void solve()
 
     cout << endl; printGrid(input_grid);
 
-    cout << endl; print1D(input_as_row); cout << "\n\n\n";
+    cout << "\nUnsolved in Row Major:" << endl; print1D(input_as_row); cout << "\n\n-----\n";
 
     if (SolveSudoku(input_grid))
     {
@@ -175,20 +162,41 @@ void solve()
         int solved_as_row[NN];
         matrix2array(input_grid, solved_as_row);
 
-        cout << endl; print1D(solved_as_row); cout << endl;
-
+        cout << "\nSolved in Row Major:" << endl; print1D(solved_as_row); cout << "\n\n-----\n";
 
         int difference_row[NN];
 
-        //set_difference(input_as_row, solved_as_row, difference_row);
+        set_difference(input_as_row, solved_as_row, difference_row);
 
-        //print1D(difference_row);
 
+        cout << "\nDifference between Solved and Unsolved:" << endl; print1D(difference_row); cout << "\n\n";
+	return 0;
     }
 
     else
         cout << "No solution exists" << endl;
+	return -1;
 
+
+}
+
+
+int main()
+{
+
+    int input_grid[N][N] = {
+        {3, 0, 6, 5, 0, 8, 4, 0, 0},
+        {5, 2, 0, 0, 0, 0, 0, 0, 0},
+        {0, 8, 7, 0, 0, 0, 0, 3, 1},
+        {0, 0, 3, 0, 1, 0, 0, 8, 0},
+        {9, 0, 0, 8, 6, 3, 0, 0, 5},
+        {0, 5, 0, 0, 9, 0, 6, 0, 0},
+        {1, 3, 0, 0, 0, 0, 2, 5, 0},
+        {0, 0, 0, 0, 0, 0, 0, 7, 4},
+        {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+
+
+    solve_puzzle(input_grid);
 }
 
 
