@@ -16,13 +16,13 @@ def publish_predictions(data):
     pub.publish(predictions)
     rate = rospy.Rate(10) # 10hz
     rate.sleep()
-    
+
 
 def start_node():
     rospy.init_node('predictions_node', anonymous=True)
 
 #    rospy.Subscriber('vision_node', Image, predict) # TEMP STRING
-    rospy.Subscriber('chatter', String, publish_predictions) # TEMP STRING
+    rospy.Subscriber('vision_node', String, publish_predictions) # TEMP STRING
 
     print("Node successfully started.")
 

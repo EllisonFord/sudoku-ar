@@ -16,7 +16,7 @@ public:
 */
 
 ros::NodeHandle r;
-ros::Publisher laser_scan_pub = r.advertise<sensor_msgs::LaserScan>("laser_scan", 81);
+auto laser_scan_pub = r.advertise<sensor_msgs::LaserScan>("laser_scan", 81);
 
 void Callback(const nxt_msgs::Range  &msg)
 {
@@ -25,6 +25,9 @@ void Callback(const nxt_msgs::Range  &msg)
 }
 
 
+// Publishes images
+// Gets array in return
+
 
 int main(int argc, char** argv)
 {
@@ -32,7 +35,7 @@ int main(int argc, char** argv)
 
   ros::NodeHandle nh;
 
-  ros::Subscriber sub = nh.subscribe("point_cloud", 81, Callback);
+  auto sub = nh.subscribe("nn_predictions", 81, Callback);
 
   ros::spin();
 
