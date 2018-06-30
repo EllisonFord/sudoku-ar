@@ -59,7 +59,7 @@ def cpp_sudoku_call(imgs_list):
     return predicted_classes
 
 
-def test_predictions(imgs_path='gray_imgs/', displ=False, write_file=True):
+def run_predictions(imgs_path='gray_imgs/', displ=False, write_file=True):
     # PROCESS THE IMAGES
     imgs_array = read_images(imgs_path)
     predictions = predict(imgs_array)
@@ -74,7 +74,7 @@ def test_predictions(imgs_path='gray_imgs/', displ=False, write_file=True):
             f.write(" ".join(map(str, predictions)))
 
 start_time = time()
-test_predictions(imgs_path='gray_imgs/', displ=False, write_file=True)
+run_predictions(imgs_path='gray_imgs/', displ=False, write_file=True)
 print("--- %s seconds for the neural network to run ---" % (time() - start_time))
 
 #im_list = read_images()
