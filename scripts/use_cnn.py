@@ -6,7 +6,7 @@ import glob
 from params import *
 import os
 #from keras.applications.imagenet_utils import decode_predictions
-
+from time import time
 
 dir_path = os.path.dirname(__file__)
 
@@ -55,20 +55,27 @@ def disp_predictions(input_imgs, predictions):
 def cpp_sudoku_call(imgs_list):
     th_imgs = [prepare_image(cv2.imread(im, GRAYSCALE)) for im in imgs_list]
     predicted_classes = predict(th_imgs)
-
     print(type(predicted_classes))
-
     return predicted_classes
 
 
-def test_predictions(dir='../extracted_numbers/gray'):
+def test_predictions(imgs_path='gray_imgs/', displ=False, write_file=True):
     # PROCESS THE IMAGES
-    imgs_array = read_images(dir)
-    prediction = predict(imgs_array)
-    disp_predictions(imgs_array, prediction)
+    imgs_array = read_images(imgs_path)
+    predictions = predict(imgs_array)
 
+    if displ:
+        disp_predictions(imgs_array, predictions)
 
-#test_predictions(dir="../extracted_numbers/gray")
+    if write_file:
+        with open(dir_path+"/predictions/"+"results.txt", 'w+') as f:
+            #print(f)
+            #np.savetxt()
+            f.write(" ".join(map(str, predictions)))
+
+start_time = time()
+test_predictions(imgs_path='gray_imgs/', displ=False, write_file=True)
+print("--- %s seconds for the neural network to run ---" % (time() - start_time))
 
 #im_list = read_images()
 

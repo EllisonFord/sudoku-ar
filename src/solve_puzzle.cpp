@@ -128,6 +128,7 @@ void set_difference(const int& a[NN], const int& b[NN], int& c[NN]){
 }
 */
 
+/*
 void set_difference(const int& unsolved[NN], const int& solved[NN], int& difference[NN])
 {
 
@@ -142,9 +143,9 @@ void set_difference(const int& unsolved[NN], const int& solved[NN], int& differe
 
 
 }
+*/
 
-
-int main()
+void solve()
 {
     int input_grid[N][N] = {
             {3, 0, 6, 5, 0, 8, 4, 0, 0},
@@ -179,9 +180,9 @@ int main()
 
         int difference_row[NN];
 
-        set_difference(input_as_row, solved_as_row, difference_row);
+        //set_difference(input_as_row, solved_as_row, difference_row);
 
-        print1D(difference_row);
+        //print1D(difference_row);
 
     }
 
