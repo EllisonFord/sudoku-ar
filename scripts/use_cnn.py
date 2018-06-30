@@ -74,7 +74,7 @@ def run_predictions(imgs_path='gray_imgs/', displ=False, write_file=True):
             f.write(" ".join(map(str, predictions)))
 
 start_time = time()
-run_predictions(imgs_path='gray_imgs/', displ=False, write_file=True)
+run_predictions()
 print("--- %s seconds for the neural network to run ---" % (time() - start_time))
 
 #im_list = read_images()
