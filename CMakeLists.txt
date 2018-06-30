@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   cv_bridge
   image_transport
+  message_generation
 )
 
 
@@ -31,6 +32,8 @@ include
 
 add_executable(vision_node src/vision_node.cpp)
 target_link_libraries(vision_node ${catkin_LIBRARIES})
+
+add_executable(solve_puzzle src/solve_puzzle.cpp)
 
 find_package(OpenCV REQUIRED)
 target_link_libraries(vision_node ${OpenCV_LIBS})

@@ -1,32 +1,21 @@
+// SYSTEM
+#include <iostream>
+// ROS
 #include <ros/ros.h>
-#include <image_transport/image_transport.h>
+#include <image_transport/image_transport.h> // THIS IS TOO MUCH?
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
-
+#include <std_msgs/UInt8.h>
+// CUSTOM
+#include "solve_puzzle.cpp"
+using namespace std;
 using namespace cv;
 
-/*
-class SudokuROS
+
+void Callback(const std_msgs::UInt8& msg)
 {
-private:
-
-public:
-
-};
-*/
-
-ros::NodeHandle r;
-auto laser_scan_pub = r.advertise<sensor_msgs::LaserScan>("laser_scan", 81);
-
-void Callback(const nxt_msgs::Range  &msg)
-{
-  sensor_msgs::LaserScan pub;
-  laser_scan_pub.publish(pub);
+    cout << "Predicted: " << msg << endl;
 }
-
-
-// Publishes images
-// Gets array in return
 
 
 int main(int argc, char** argv)
@@ -35,31 +24,29 @@ int main(int argc, char** argv)
 
   ros::NodeHandle nh;
 
-  auto sub = nh.subscribe("nn_predictions", 81, Callback);
-
-  ros::spin();
-
-  /*
   image_transport::ImageTransport it(nh);
 
-  auto pub = it.advertise("camera/image", 81);
+  auto pub = it.advertise("camera/image", 1);
 
-  auto image = cv::imread(argv[1], CV_LOAD_IMAGE_COLOR);
+  auto image = cv::imread("/home/master/catkin_ws/src/sudoku_ar/extracted_numbers/only_nums/12.png", CV_LOAD_IMAGE_COLOR);
 
-  cv::waitKey(30);
+  //cv::waitKey(30);
 
   auto msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image).toImageMsg();
 
-  ros::Rate loop_rate(5);
+  ros::Rate loop_rate(10); //
 
 
   while (nh.ok()) {
 
     pub.publish(msg);
 
+    auto sub = nh.subscribe("nn_predictions", 1, Callback);
+
+    cout << "Subscription is done." << endl;
+
     ros::spinOnce();
 
     loop_rate.sleep();
   }
-   */
 }
