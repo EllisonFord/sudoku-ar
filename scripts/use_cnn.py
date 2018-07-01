@@ -1,3 +1,5 @@
+from time import time
+start_time = time()
 from keras.models import model_from_json
 from preparing_dataset import *
 import cv2
@@ -6,7 +8,6 @@ import glob
 from params import *
 import os
 #from keras.applications.imagenet_utils import decode_predictions
-from time import time
 
 dir_path = os.path.dirname(__file__)
 
@@ -73,8 +74,8 @@ def run_predictions(imgs_path='gray_imgs/', displ=False, write_file=True):
             #np.savetxt()
             f.write(" ".join(map(str, predictions)))
 
-start_time = time()
-run_predictions()
+
+run_predictions(imgs_path="../extracted_numbers/gray/", displ=False, write_file=False)
 print("--- %s seconds for the neural network to run ---" % (time() - start_time))
 
 #im_list = read_images()
