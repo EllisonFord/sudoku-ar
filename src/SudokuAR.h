@@ -106,6 +106,7 @@ private:
 	bool m_printSolution; 
 	bool m_grayFlag;
 	
+	int m_differenceRow[NN];
 
 	////////////////////////////////////////////////////////////////////////
 
