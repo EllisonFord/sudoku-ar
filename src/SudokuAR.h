@@ -12,17 +12,27 @@
 #include "opencv2/core.hpp"
 #include "opencv2/opencv.hpp"
 
+#include "opencv2/highgui.hpp"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/core.hpp"
+#include "opencv2/opencv.hpp"
+
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <fstream>
 
-#include <numeric>
-#include "opencv2/features2d.hpp"
-#include "opencv2/calib3d/calib3d.hpp"
+//#include <numeric>
+//#include "opencv2/features2d.hpp"
+//#include "opencv2/calib3d/calib3d.hpp"
 
 #include "PoseEstimation.h"
 
 #define DELIMITERS 6
+
+#define UNASSIGNED 0
+#define N 9
+#define NN 81
 
 typedef struct
 {
@@ -43,6 +53,7 @@ public:
 
 private:
 
+	char key;
 	bool m_playVideo;
 	bool m_isFirstStripe;
 	bool m_isFirstMarker;
@@ -91,6 +102,9 @@ private:
 	bool m_subimagesIsImage[81];
 
 	double m_sudokuSize;
+	bool m_saveSubimages;
+	bool m_printSolution; 
+	bool m_grayFlag;
 	
 
 	////////////////////////////////////////////////////////////////////////
@@ -104,12 +118,16 @@ private:
 	cv::Point2f computeAccurateDelimiter(cv::Point p);
 	cv::Point2f computeSobel(cv::Point p);
 	int subpixSampleSafe(const cv::Mat& gray, const cv::Point2f& p);
-	cv::Mat perspectiveTransform(cv::Point2f* corners);
-	void extractSubimages();
-	cv::Mat fineCrop(const cv::Mat& img);
+	bool perspectiveTransform(cv::Point2f* corners, cv::Mat& projMatInv);
+	void extractSubimagesAndSaveToFolder(bool saveSubimages);
+	cv::Mat fineCropGray(const cv::Mat& img);
+	cv::Mat fineCropBinary(const cv::Mat& img);
 	bool isPixelAtBorder(cv::Point p, cv::Size imgSize);
 	void estimateSudokuPose(float resultMatrix[16]); // CHANGED
-	void drawNumber(std::string number, unsigned row, unsigned col);
+	bool solve(int differenceRow[N]);
+	void drawSolution(int differenceRow[N]);
+	void drawNumber(int number, unsigned row, unsigned col);
+	void reprojectSolution(const cv::Mat& projMatInv);
 
 	////////////////////////////////////////////////////////////////////////
 

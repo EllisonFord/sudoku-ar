@@ -40,7 +40,7 @@ def scramble_dataset(list):
 
 def prepare_image(image):
     image = resize(image)
-    ret, image = threshold(image)
+    #ret, image = threshold(image)
     return image
 
 

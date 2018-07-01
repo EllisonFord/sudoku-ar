@@ -1,20 +1,33 @@
-from time import time
-start_time = time()
+import cv2
 from keras.models import model_from_json
 from preparing_dataset import *
-import cv2
 from keras import backend as k
 import glob
 from params import *
 import os
 #from keras.applications.imagenet_utils import decode_predictions
+from time import time
+
 
 dir_path = os.path.dirname(__file__)
+#dir_path = "./scripts"
+#dir_path = "./"
+
+import re
+numbers = re.compile(r'(\d+)')
+def numericalSort(value):
+    parts = numbers.split(value)
+    parts[1::2] = map(int, parts[1::2])
+    return parts
 
 
 def read_images(dir):
-    test_images = [prepare_image(cv2.imread(file, GRAYSCALE)) for file in glob.glob(dir+'/*.png')]
+    test_images = [prepare_image(cv2.imread(file, GRAYSCALE)) for file in sorted(glob.glob(dir+'/*.png'), key=numericalSort)]
     return np.asanyarray(test_images)
+
+#def read_images(dir):
+#    test_images = [prepare_image(cv2.imread(file, GRAYSCALE)) for file in glob.glob(dir+'/*.png')]
+#    return np.asanyarray(test_images)
 
 
 def predict(input_imgs):
@@ -28,17 +41,16 @@ def predict(input_imgs):
     x_test /= 255
 
     # LOAD THE NETWORK
-    with open(dir_path+'/trained_net/char74k_architecture.json', 'r') as f:
+    with open(dir_path + '/trained_net/char74k_architecture.json', 'r') as f:
         model = model_from_json(f.read())
 
     # Loading the weights
-    model.load_weights(dir_path+'/trained_net/char74k_weights.h5')
+    model.load_weights(dir_path + '/trained_net/char74k_weights.h5')
 
     # RUN and KEEP PREDICTIONS
     predicted_classes = model.predict_classes(x_test)
 
     return predicted_classes
-
 
 def disp_predictions(input_imgs, predictions):
     # SHOW IMAGES AND PREDICTIONS
@@ -46,7 +58,7 @@ def disp_predictions(input_imgs, predictions):
         win_name = 'Prediction: ' + str(img)
         cv2.namedWindow(win_name)
         cv2.moveWindow(win_name, 700, 400)
-        enlarged_im = cv2.resize(input_imgs[i], (200, 200))
+        enlarged_im = cv2.resize(input_imgs[i], (400, 400))
         cv2.imshow(win_name, enlarged_im)
         cv2.waitKey()
         cv2.destroyWindow(win_name)
@@ -60,7 +72,7 @@ def cpp_sudoku_call(imgs_list):
     return predicted_classes
 
 
-def run_predictions(imgs_path='gray_imgs/', displ=False, write_file=True):
+def run_predictions(imgs_path=dir_path + '/gray_imgs/', displ=False, write_file=True):
     # PROCESS THE IMAGES
     imgs_array = read_images(imgs_path)
     predictions = predict(imgs_array)
@@ -69,13 +81,13 @@ def run_predictions(imgs_path='gray_imgs/', displ=False, write_file=True):
         disp_predictions(imgs_array, predictions)
 
     if write_file:
-        with open(dir_path+"/predictions/"+"results.txt", 'w+') as f:
+        with open(dir_path + '/predictions/results.txt', 'w+') as f:
             #print(f)
             #np.savetxt()
             f.write(" ".join(map(str, predictions)))
 
-
-run_predictions(imgs_path="../extracted_numbers/gray/", displ=False, write_file=False)
+start_time = time()
+run_predictions()
 print("--- %s seconds for the neural network to run ---" % (time() - start_time))
 
 #im_list = read_images()
