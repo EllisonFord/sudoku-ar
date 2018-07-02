@@ -1,3 +1,12 @@
+/**
+	SudokuAR.h
+	Purpose:	* Defines the SudokuAR class to detect a Sodoku grid
+				and extract the 81 subimages that define it.
+
+	@author Pablo Rodriguez Palafox
+	@version 1.0 02/07/18
+*/
+
 #pragma once
 
 #ifndef SudokuAR_H_
@@ -12,19 +21,10 @@
 #include "opencv2/core.hpp"
 #include "opencv2/opencv.hpp"
 
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/core.hpp"
-#include "opencv2/opencv.hpp"
-
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 #include <fstream>
-
-//#include <numeric>
-//#include "opencv2/features2d.hpp"
-//#include "opencv2/calib3d/calib3d.hpp"
 
 #include "PoseEstimation.h"
 
@@ -128,7 +128,7 @@ private:
 	bool solve(int differenceRow[N]);
 	void drawSolution(int differenceRow[N]);
 	void drawNumber(int number, unsigned row, unsigned col);
-	void reprojectSolution(const cv::Mat& projMatInv);
+	void reprojectSolution(const cv::Mat& projMatInv, cv::Mat& img_bgr);
 
 	////////////////////////////////////////////////////////////////////////
 

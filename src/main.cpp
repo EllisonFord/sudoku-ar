@@ -1,4 +1,19 @@
-﻿#include "stdafx.h"
+﻿/**
+	main.cpp
+	Purpose:    * Starts the video feed (OpenCV) and initializes GLFW
+				* Creates an object of the class SudokuAR, uses it
+				to detect, solve and reproject the solved sudoku onto 
+				the input image
+				* Draws 4 balls at every corner of the Sudoku (OpenGL)
+
+	@authors	Yoonhee
+				Gonzalo Munilla Garrido
+				Jose
+				Pablo Rodriguez Palafox
+	@version 1.0 02/07/18
+*/
+
+#include "stdafx.h"
 
 //#define GLFW_INCLUDE_GLU
 #include <GLFW/glfw3.h>
@@ -7,7 +22,6 @@
 #include <cstring>
 #include <cstdlib>
 
-#include "DrawPrimitives.h"
 #include <iostream>
 #include <iomanip>
 
@@ -17,6 +31,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#include "DrawPrimitives.h"
 #include "PoseEstimation.h"
 #include "SudokuAR.h"
 
