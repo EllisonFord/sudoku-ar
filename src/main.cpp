@@ -38,6 +38,8 @@
 using namespace std;
 cv::VideoCapture cap;
 
+const double sudokuSize = 0.185; // [m]
+
 const int camera_height = 480;
 const int camera_width = 640;
 int virtual_camera_angle = 30;
@@ -171,16 +173,23 @@ void display(GLFWwindow* window, const cv::Mat &img_bgr, float resultMatrix[16])
 		}
 	}
 
-	//glLoadTransposeMatrixf( resultMatrix );
 	glLoadMatrixf(resultTransposedMatrix);
-	glRotatef(-90, 1, 0, 0);
-	glScalef(0.03, 0.03, 0.03);
+	//////////////////////////////////////////
+	// Set the axis in the following way:   // 
+	//		* x: looking right              //
+	//		* y: looking upwards            //
+	//		* z: looking out of the screen  //
+	//////////////////////////////////////////
+	glRotatef(-180, 1, 0, 0); 
+	glRotatef(90, 0, 0, 1);
+	//glScalef(0.03, 0.03, 0.03);
 
-	//Draw the cube
-	//drawCube(resultMatrix[3], resultMatrix[7], resultMatrix[11], 0.09);
+	// Translate
+	glTranslatef( - sudokuSize * 0.25, sudokuSize * 0.25, 0.0);
 
-	glColor4f(1.0, 1.0, 1.0, 1.0);
-	drawSphere(0.2, 10, 10);
+	// Morada
+	glColor4f(1.0, 0.0, 1.0, 1.0);
+	drawSphere(0.005, 10, 10);
 
 	//// draw 3 white spheres
 	/*glColor4f(1.0, 1.0, 1.0, 1.0);
@@ -236,16 +245,12 @@ int main()
 	cv::Mat img_bgr;
 	initVideoStream(cap);
 	
-	/*cap >> img_bgr;
-	cv::Size size = img_bgr.size();
-	std::cout << size << std::endl;*/
-
-	const double sudokuSize = 0.09; // [m]
 	SudokuAR sudokuAR(sudokuSize);
 
 	// initialize the window system
 	/* Create a windowed mode window and its OpenGL context */
 	window = glfwCreateWindow(camera_width, camera_height, "Exercise 8 - Combine", NULL, NULL);
+	glfwSetWindowPos(window, 1900, 750);
 	if (!window)
 	{
 		glfwTerminate();
