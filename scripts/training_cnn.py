@@ -14,19 +14,25 @@ from preparing_dataset import *
 from params import *
 #from neural_net.preparing_dataset import *
 #from neural_net.params import *
+from datetime import date
+
+today = date.today().strftime("%Y-%m-%d")
 
 
-def save_model(model):
+def save_model(model, title_weights='trained_weights', title_architecture='trained_architecture'):
     # Saving the weights
-    model.save_weights('trained_net/char74k_weights.h5')
+    model.save_weights('trained_net/'+title_weights+'.h5')
 
     # Saving the network architecture
-    with open('trained_net/char74k_architecture.json', 'w') as f:
+    with open('trained_net/'+title_architecture+'.json', 'w') as f:
         f.write(model.to_json())
 
 
+# IMPORTANT, CHOOSE between 'combination', 'mnist' or 'char74k'
+chosen_dataset = 'char74k'
+
 # the data, split between train and test sets
-(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset='combination', exclude=0)  # Train using a combination of MNIST and Char74k
+(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset=chosen_dataset, whiten=0)
 
 
 # Uncomment below if you would like to see what the net is going to train on.
@@ -78,8 +84,8 @@ model.fit(x_train, y_train,
           epochs=epochs,
           verbose=1,
           validation_data=(x_test, y_test))
-score = model.evaluate(x_test, y_test, verbose=0)
+score = model.evaluate(x_test, y_test, verbose=False)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-save_model(model)
+save_model(model, chosen_dataset+'_weights_'+today, chosen_dataset+'_architecture_'+today)
