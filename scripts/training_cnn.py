@@ -12,33 +12,19 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
 from preparing_dataset import *
 from params import *
-#from neural_net.preparing_dataset import *
-#from neural_net.params import *
-from datetime import date
-
-today = date.today().strftime("%Y-%m-%d_%H-%M")
-
-
-def save_model(model, title_weights='trained_weights', title_architecture='trained_architecture'):
-    # Saving the weights
-    model.save_weights('trained_net/'+title_weights+'.h5')
-
-    # Saving the network architecture
-    with open('trained_net/'+title_architecture+'.json', 'w') as f:
-        f.write(model.to_json())
+from time import strftime
 
 
 # IMPORTANT, CHOOSE between 'combination', 'mnist' or 'char74k'
 chosen_dataset = 'combination'
 
-# if chosen_dataset is 'combination':
 
 # the data, split between train and test sets
-(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset=chosen_dataset, whiten=0)
+(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset=chosen_dataset, whiten=0, even_training=True)
 
 
 # Uncomment below if you would like to see what the net is going to train on.
-# see_samples(x_train, y_train)
+# see_samples(x_train, y_train, nSamples=20)
 
 
 if K.image_data_format() == 'channels_first':
@@ -87,7 +73,18 @@ model.fit(x_train, y_train,
           verbose=1,
           validation_data=(x_test, y_test))
 score = model.evaluate(x_test, y_test, verbose=False)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
 
-save_model(model, chosen_dataset+'_weights_'+today, chosen_dataset+'_architecture_'+today)
+test_loss = 'Test loss:', score[0]
+test_acc = 'Test accuracy:', score[1]
+print(test_loss)
+print(test_acc)
+
+time_stamp = strftime("%Y-%m-%d_%H:%M:%S")
+
+#net_details = []
+#net_details.append()
+
+save_model(model,
+           title_dataset=chosen_dataset,
+           time=time_stamp,
+           net_details=None)

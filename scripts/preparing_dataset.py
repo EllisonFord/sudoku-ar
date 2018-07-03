@@ -97,8 +97,20 @@ def exclusions(exclude_label, x_train, y_train, x_test, y_test):
 
 
 # Divides the dataset into Training and Test sets and returns (x_train, y_train), (x_test, y_test)
-def split_dataset(list_in, combined=True, exclude_label=None):
-    train, test = list_in[:6000, :], list_in[6000:, :]
+def split_dataset(list_in, combined=True, exclude_label=None, even_training=True):
+
+    len_char74k = len(list_in)
+
+    train_set_len = int(len_char74k*0.8571)
+
+    train, test = list_in[:train_set_len, :], list_in[train_set_len:, :]
+
+    len_train = len(train)
+    len_test = len(test)
+
+    print("Length of train set:", len_train)
+    print("Length of test set:", len_test)
+    print(len_char74k, "images of Char74k in total.")
 
     x_train = []
     y_train = []
@@ -121,6 +133,16 @@ def split_dataset(list_in, combined=True, exclude_label=None):
     # This adds MNIST to the loaded dataset
     if combined is True:
         (x_train_mn, y_train_mn), (x_test_mn, y_test_mn) = mnist.load_data()
+
+        if even_training is True:
+
+            x_train_mn = x_train_mn[:len_train, :, :]
+            x_test_mn = x_test_mn[:len_test, :, :]
+            y_train_mn = y_train_mn[:len_train]
+            y_test_mn = y_test_mn[:len_test]
+
+            print("The MNIST dataset has been trimmed to", x_train_mn.shape[0] + x_test_mn.shape[0], "as well.")
+
         x_train = np.concatenate((x_train, x_train_mn))
         y_train = np.concatenate((y_train, y_train_mn))
         x_test = np.concatenate((x_test, x_test_mn))
@@ -134,8 +156,8 @@ def split_dataset(list_in, combined=True, exclude_label=None):
 
 
 # Visualise 10 items from the dataset about to train
-def see_samples(x, y):
-    for i in range(25):
+def see_samples(x, y, nSamples):
+    for i in range(nSamples):
         win_name = "y = " + str(y[i])
         cv2.namedWindow(win_name)
         cv2.moveWindow(win_name, 700, 400)
@@ -151,7 +173,7 @@ def see_samples(x, y):
 
 
 # Returns list of tuples:
-def load_our_dataset(dataset='combination', whiten=None):
+def load_our_dataset(dataset='combination', whiten=None, even_training=True):
 
     if dataset is 'mnist':
         if whiten is not None:
@@ -161,7 +183,6 @@ def load_our_dataset(dataset='combination', whiten=None):
         else:
             return mnist.load_data()
     else:
-
         # Read the Directories with the CHAR74k images stored
         sorted_tuples = read_dirs()
 
@@ -169,6 +190,23 @@ def load_our_dataset(dataset='combination', whiten=None):
         unsorted_tuples = scramble_dataset(sorted_tuples)
 
         if dataset is 'combination':
-            return split_dataset(unsorted_tuples, combined=True, exclude_label=whiten)
+            return split_dataset(list_in=unsorted_tuples, combined=True, exclude_label=whiten, even_training=even_training)
+
+
         if dataset is 'char74k':
-            return split_dataset(unsorted_tuples, combined=False, exclude_label=whiten)
+            return split_dataset(list_in=unsorted_tuples, combined=False, exclude_label=whiten, even_training=False)
+
+
+def save_model(model, title_dataset, time, net_details=None):
+
+    # Saving the weights
+    model.save_weights('trained_net/'+title_dataset+'_weights_'+time+'.h5')
+
+    # Saving the network architecture
+    with open('trained_net/'+title_dataset+'_architecture_'+time+'.json', 'w') as f:
+        f.write(model.to_json())
+
+    if net_details is not None:
+        # Saving the network architecture
+        with open('trained_net/'+title_dataset+'_EXTRA_'+time+'.txt', 'w') as f:
+            f.write("Hello.")
