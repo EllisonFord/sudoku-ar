@@ -16,7 +16,7 @@ from time import strftime
 
 
 # IMPORTANT, CHOOSE between 'combination', 'mnist' or 'char74k'
-chosen_dataset = 'combination'
+chosen_dataset = 'char74k'
 
 
 # the data, split between train and test sets
