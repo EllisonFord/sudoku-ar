@@ -4,13 +4,15 @@ import numpy as np
 from keras.datasets import mnist
 from params import *
 
+# CONSTANTS
+# This will resize the images, and the NN will adapt to this too
 dir_path = os.path.dirname(__file__)
 
 
 # FUNCTIONS
 # Returns the directory path, and the number it will process
 def dir_and_digit():
-    directories = range(0, 10)  # Names of the directories
+    directories = range(1, 10)  # Names of the directories
     dir_and_digit = []
     for dir in directories:
         dir_and_digit.append((os.path.join(dir_path, "cnn_train_digits/" + str(dir) + "/"), dir))
@@ -47,7 +49,7 @@ def read_dirs():
     x = []
     y = []
     list = []
-    for i in range(0, 10):
+    for i in range(0, 9):
         for image in os.listdir(dir_and_digit()[i][0]):
             path = os.path.join(dir_path, "cnn_train_digits/" + str(i+1) + "/" + image)
 
@@ -136,24 +138,22 @@ def see_samples(x, y):
 
 
 # Returns list of tuples:
-def load_our_dataset(dataset='combination', whiten=None):
+def load_our_dataset(dataset='combination', exclude=None):
 
+    # Read the Directories with the CHAR74k images stored
+    sorted_tuples = read_dirs()
+
+    # Scramble their order
+    unsorted_tuples = scramble_dataset(sorted_tuples)
+
+    if dataset is 'combination':
+        return split_dataset(unsorted_tuples, combined=True, exclude_label=exclude)
+    if dataset is 'char74k':
+        return split_dataset(unsorted_tuples, combined=False, exclude_label=exclude)
     if dataset is 'mnist':
-        if whiten is not None:
+        if exclude is not None:
             (x_train, y_train), (x_test, y_test) = mnist.load_data()
-            x_train, y_train, x_test, y_test = exclusions(whiten, x_train, y_train, x_test, y_test)
+            x_train, y_train, x_test, y_test = exclusions(exclude, x_train, y_train, x_test, y_test)
             return (x_train, y_train), (x_test, y_test)
         else:
             return mnist.load_data()
-    else:
-
-        # Read the Directories with the CHAR74k images stored
-        sorted_tuples = read_dirs()
-
-        # Scramble their order
-        unsorted_tuples = scramble_dataset(sorted_tuples)
-
-        if dataset is 'combination':
-            return split_dataset(unsorted_tuples, combined=True, exclude_label=whiten)
-        if dataset is 'char74k':
-            return split_dataset(unsorted_tuples, combined=False, exclude_label=whiten)
