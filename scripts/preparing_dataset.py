@@ -32,7 +32,8 @@ def resize(image):
 
 
 def threshold(image):
-    return cv2.threshold(image, THRESHOLD_VAL, 255, cv2.THRESH_BINARY_INV)
+    #return cv2.threshold(image, THRESHOLD_VAL, 255, cv2.THRESH_BINARY_INV)
+    return cv2.bitwise_not(image, image)
 
 
 # Randomise the list of tuples
@@ -44,6 +45,7 @@ def scramble_dataset(list):
 def prepare_image(image):
     image = resize(image)
     #ret, image = threshold(image)
+    image = threshold(image)
     return image
 
 
@@ -54,7 +56,7 @@ def read_dirs():
     list = []
     for i in range(0, 10):
         for image in os.listdir(dir_and_digit()[i][0]):
-            path = os.path.join(dir_path, "cnn_train_digits/" + str(i+1) + "/" + image)
+            path = os.path.join(dir_path, "cnn_train_digits/" + str(i) + "/" + image)
 
             image = cv2.imread(path, 0)
             image = prepare_image(image)
@@ -133,11 +135,19 @@ def split_dataset(list_in, combined=True, exclude_label=None):
 
 # Visualise 10 items from the dataset about to train
 def see_samples(x, y):
-    for i in range(10):
+    for i in range(25):
         win_name = "y = " + str(y[i])
-        cv2.imshow(win_name, x[i])
+        cv2.namedWindow(win_name)
+        cv2.moveWindow(win_name, 700, 400)
+        enlarged_im = cv2.resize(x[i], (100, 100))
+        cv2.imshow(win_name, enlarged_im)
         cv2.waitKey()
         cv2.destroyWindow(win_name)
+
+
+        # cv2.imshow(win_name, x[i])
+        # cv2.waitKey()
+        # cv2.destroyWindow(win_name)
 
 
 # Returns list of tuples:

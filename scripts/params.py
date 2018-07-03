@@ -3,7 +3,7 @@
 
 batch_size = 128
 num_classes = 10 # was 10
-epochs = 12
+epochs = 6
 
 # input image dimensions
 img_rows, img_cols = 28, 28 # adjust to new pixel size 128x128 for this dataset

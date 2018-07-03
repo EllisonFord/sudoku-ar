@@ -16,7 +16,7 @@ from params import *
 #from neural_net.params import *
 from datetime import date
 
-today = date.today().strftime("%Y-%m-%d")
+today = date.today().strftime("%Y-%m-%d_%H-%M")
 
 
 def save_model(model, title_weights='trained_weights', title_architecture='trained_architecture'):
@@ -29,7 +29,9 @@ def save_model(model, title_weights='trained_weights', title_architecture='train
 
 
 # IMPORTANT, CHOOSE between 'combination', 'mnist' or 'char74k'
-chosen_dataset = 'char74k'
+chosen_dataset = 'combination'
+
+# if chosen_dataset is 'combination':
 
 # the data, split between train and test sets
 (x_train, y_train), (x_test, y_test) = load_our_dataset(dataset=chosen_dataset, whiten=0)
