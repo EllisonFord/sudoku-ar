@@ -3,7 +3,6 @@ import os
 import numpy as np
 from keras.datasets import mnist
 from params import *
-
 dir_path = os.path.dirname(__file__)
 
 
@@ -20,6 +19,12 @@ def dir_and_digit():
 # NEEDED FOR THE TRACK BAR
 def nothing(x):
     pass
+
+
+def generate_white_imgs(title_digit):
+    white_image = np.full((128, 128), 255, np.uint8)
+    for name in range(1016):
+        cv2.imwrite(dir_path+'/cnn_train_digits/'+title_digit+'/'+str(name)+'.png', white_image)
 
 
 def resize(image):
