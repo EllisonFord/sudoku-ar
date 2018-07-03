@@ -155,7 +155,7 @@ def load_our_dataset(dataset='combination', whiten=None):
         # Read the Directories with the CHAR74k images stored
         sorted_tuples = read_dirs()
 
-        # Scramble their order
+        # Scramble the order
         unsorted_tuples = scramble_dataset(sorted_tuples)
 
         if dataset is 'combination':
