@@ -32,8 +32,8 @@ def resize(image):
 
 
 def threshold(image):
-    #return cv2.threshold(image, THRESHOLD_VAL, 255, cv2.THRESH_BINARY_INV)
-    return cv2.bitwise_not(image, image)
+    return cv2.threshold(image, THRESHOLD_VAL, 255, cv2.THRESH_BINARY_INV)
+    #return cv2.bitwise_not(image, image)
 
 
 # Randomise the list of tuples
@@ -44,8 +44,8 @@ def scramble_dataset(list):
 
 def prepare_image(image):
     image = resize(image)
-    #ret, image = threshold(image)
-    image = threshold(image)
+    ret, image = threshold(image)
+    #image = threshold(image)
     return image
 
 
@@ -210,3 +210,9 @@ def save_model(model, title_dataset, time, net_details=None):
         # Saving the network architecture
         with open('trained_net/'+title_dataset+'_EXTRA_'+time+'.txt', 'w') as f:
             f.write("Hello.")
+
+
+#def something():
+#    img_array = image.img_to_array(img)
+#    img_array_expanded_dims = np.expand_dims(img_array, axis=0)
+#    return keras.applications.mobilened.preprocess_input(img_array_expanded_dims)

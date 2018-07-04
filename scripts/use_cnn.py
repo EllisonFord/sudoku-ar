@@ -7,7 +7,7 @@ from params import *
 import os
 #from keras.applications.imagenet_utils import decode_predictions
 from time import time
-
+from keras.applications import imagenet_utils
 
 dir_path = os.path.dirname(__file__)
 #dir_path = "./scripts"
@@ -23,7 +23,12 @@ def numericalSort(value):
 
 def read_images(dir):
     test_images = [prepare_image(cv2.imread(file, GRAYSCALE)) for file in sorted(glob.glob(dir+'/*.png'), key=numericalSort)]
-    return np.asanyarray(test_images)
+
+    if len(test_images) == 0:
+        print("No image loaded. Sought directory", dir)
+        return -1
+    else:
+        return np.asanyarray(test_images)
 
 #def read_images(dir):
 #    test_images = [prepare_image(cv2.imread(file, GRAYSCALE)) for file in glob.glob(dir+'/*.png')]
@@ -41,14 +46,23 @@ def predict(input_imgs):
     x_test /= 255
 
     # LOAD THE NETWORK
-    with open(dir_path + '/trained_net/char74k_architecture_SOLO.json', 'r') as f:
+    with open(dir_path + '/trained_net/combination_architecture_2018-07-03_20:07:33.json', 'r') as f:
         model = model_from_json(f.read())
 
     # Loading the weights
-    model.load_weights(dir_path + '/trained_net/char74k_weights_SOLO.h5')
+    model.load_weights(dir_path + '/trained_net/combination_weights_2018-07-03_20:07:33.h5')
 
     # RUN and KEEP PREDICTIONS
     predicted_classes = model.predict_classes(x_test)
+
+    for image in x_test:
+        image = np.expand_dims(image, axis=0)
+
+
+    predictions = model.predict(x_test)
+    #print("New prediction:", prediction)
+    results = imagenet_utils.decode_predictions(predictions)
+    #print('Predicted:', results)
 
     return predicted_classes
 
@@ -87,15 +101,18 @@ def run_predictions(imgs_path=dir_path + '/gray_imgs/', displ=True, write_file=T
             f.write(" ".join(map(str, predictions)))
 
 start_time = time()
-run_predictions()
+#run_predictions()
 print("--- %s seconds for the neural network to run ---" % (time() - start_time))
 
-#im_list = read_images()
 
+#predict(im_list)
+run_predictions("/home/master/catkin_ws/src/sudoku_ar/extracted_numbers/only_nums")
 #cpp_sudoku_call()
 
 """ 
 EXTRA CODE
 #predictions = model.predict(x_test, verbose=True)
+
+
 
 """
