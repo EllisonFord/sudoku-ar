@@ -57,7 +57,6 @@ def read_dirs():
     for i in range(0, 10):
         for image in os.listdir(dir_and_digit()[i][0]):
             path = os.path.join(dir_path, "cnn_train_digits/" + str(i) + "/" + image)
-
             image = cv2.imread(path, 0)
             image = prepare_image(image)
             x.append(image)
@@ -70,7 +69,6 @@ def exclusions(exclude_label, x_train, y_train, x_test, y_test):
 
     for i, item in enumerate(y_train):
         if item == exclude_label:
-            #x_train[i] = 0
             x_train[i] = np.zeros([img_cols, img_rows], dtype=np.uint8)
             x_train[i].fill(0)
 
@@ -78,20 +76,6 @@ def exclusions(exclude_label, x_train, y_train, x_test, y_test):
         if item == exclude_label:
             x_test[i] = np.zeros([img_cols, img_rows], dtype=np.uint8)
             x_test[i].fill(0)
-
-    """
-    for i, item in enumerate(y_train):
-        if item == exclude_label:
-            #print("Deleting Train", exclude_label)
-            np.delete(x_train, i)
-            np.delete(y_train, i)
-
-    for i, item in enumerate(y_test):
-        if item == exclude_label:
-            #print("Deleting", exclude_label)
-            np.delete(x_test, i)
-            np.delete(y_test, i)
-    """
 
     return x_train, y_train, x_test, y_test
 
@@ -135,12 +119,10 @@ def split_dataset(list_in, combined=True, exclude_label=None, even_training=True
         (x_train_mn, y_train_mn), (x_test_mn, y_test_mn) = mnist.load_data()
 
         if even_training is True:
-
             x_train_mn = x_train_mn[:len_train, :, :]
             x_test_mn = x_test_mn[:len_test, :, :]
             y_train_mn = y_train_mn[:len_train]
             y_test_mn = y_test_mn[:len_test]
-
             print("The MNIST dataset has been trimmed to", x_train_mn.shape[0] + x_test_mn.shape[0], "as well.")
 
         x_train = np.concatenate((x_train, x_train_mn))
@@ -165,11 +147,6 @@ def see_samples(x, y, nSamples):
         cv2.imshow(win_name, enlarged_im)
         cv2.waitKey()
         cv2.destroyWindow(win_name)
-
-
-        # cv2.imshow(win_name, x[i])
-        # cv2.waitKey()
-        # cv2.destroyWindow(win_name)
 
 
 # Returns list of tuples:
