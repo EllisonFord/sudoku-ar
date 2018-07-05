@@ -60,8 +60,8 @@ def predict(input_imgs):
 
 
     predictions = model.predict(x_test)
-    #print("New prediction:", prediction)
-    results = imagenet_utils.decode_predictions(predictions)
+    print("New prediction:", prediction)
+    #results = imagenet_utils.decode_predictions(predictions)
     #print('Predicted:', results)
 
     return predicted_classes
@@ -106,7 +106,10 @@ print("--- %s seconds for the neural network to run ---" % (time() - start_time)
 
 
 #predict(im_list)
-run_predictions("/home/master/catkin_ws/src/sudoku_ar/extracted_numbers/only_nums")
+
+print(dir_path+"/extracted_numbers/only_nums")
+
+#run_predictions(dir_path+"/extracted_numbers/only_nums")
 #cpp_sudoku_call()
 
 """ 

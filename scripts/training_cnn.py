@@ -79,7 +79,7 @@ test_acc = 'Test accuracy:', score[1]
 print(test_loss)
 print(test_acc)
 
-time_stamp = strftime("%Y-%m-%d_%H:%M:%S")
+time_stamp = strftime("%Y-%m-%d_%H.%M.%S")
 
 #net_details = []
 #net_details.append()
