@@ -180,8 +180,10 @@ def load_our_dataset(dataset='combination', whiten=None, even_training=True):
             (x_train, y_train), (x_test, y_test) = mnist.load_data()
             x_train, y_train, x_test, y_test = exclusions(whiten, x_train, y_train, x_test, y_test)
             return (x_train, y_train), (x_test, y_test)
+
         else:
             return mnist.load_data()
+
     else:
         # Read the Directories with the CHAR74k images stored
         sorted_tuples = read_dirs()
@@ -190,11 +192,16 @@ def load_our_dataset(dataset='combination', whiten=None, even_training=True):
         unsorted_tuples = scramble_dataset(sorted_tuples)
 
         if dataset is 'combination':
-            return split_dataset(list_in=unsorted_tuples, combined=True, exclude_label=whiten, even_training=even_training)
-
+            return split_dataset(list_in=unsorted_tuples,
+                                 combined=True,
+                                 exclude_label=whiten,
+                                 even_training=even_training)
 
         if dataset is 'char74k':
-            return split_dataset(list_in=unsorted_tuples, combined=False, exclude_label=whiten, even_training=False)
+            return split_dataset(list_in=unsorted_tuples,
+                                 combined=False,
+                                 exclude_label=whiten,
+                                 even_training=False)
 
 
 def save_model(model, title_dataset, time, net_details=None):
