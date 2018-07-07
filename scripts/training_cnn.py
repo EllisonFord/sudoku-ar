@@ -17,11 +17,12 @@ from time import strftime
 
 # IMPORTANT, CHOOSE between 'combination', 'mnist' or 'char74k'
 chosen_dataset = 'char74k'
+remove_char = 0
+train_evenly = True  # Choose this if you are training on combination and you want mnist and char74k to have the same num_samples
 
 
 # the data, split between train and test sets
-(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset=chosen_dataset, whiten=0, even_training=True)
-
+(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset=chosen_dataset, whiten=remove_char, even_training=train_evenly)
 
 # Uncomment below if you would like to see what the net is going to train on.
 # see_samples(x_train, y_train, nSamples=20)
@@ -36,9 +37,11 @@ else:
     x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
     input_shape = (img_rows, img_cols, 1)
 
-
+# Make sure that all of the bits will be present
 x_train = x_train.astype('float32')
 x_test = x_test.astype('float32')
+
+# Normalise
 x_train /= 255
 x_test /= 255
 
