@@ -16,9 +16,9 @@ from time import strftime
 
 
 # IMPORTANT, CHOOSE between 'combination', 'mnist' or 'char74k'
-chosen_dataset = 'char74k'
+chosen_dataset = 'combination'
 remove_char = 0
-train_evenly = True  # Choose this if you are training on combination and you want mnist and char74k to have the same num_samples
+train_evenly = False  # Choose this if you are training on combination and you want mnist and char74k to have the same num_samples
 
 
 # the data, split between train and test sets
