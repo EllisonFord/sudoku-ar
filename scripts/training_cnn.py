@@ -1,9 +1,3 @@
-'''Trains a simple convnet on the MNIST dataset.
-Gets to 99.25% test accuracy after 12 epochs
-(there is still a lot of margin for parameter tuning).
-16 seconds per epoch on a GRID K520 GPU.
-'''
-
 from __future__ import print_function
 import keras
 from keras.models import Sequential
@@ -16,13 +10,15 @@ from time import strftime
 
 
 # IMPORTANT, CHOOSE between 'combination', 'mnist' or 'char74k'
-chosen_dataset = 'combination'
+chosen_dataset = 'char74k'
 remove_char = 0
 train_evenly = False  # Choose this if you are training on combination and you want mnist and char74k to have the same num_samples
 
 
 # the data, split between train and test sets
-(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset=chosen_dataset, whiten=remove_char, even_training=train_evenly)
+(x_train, y_train), (x_test, y_test) = load_our_dataset(dataset=chosen_dataset,
+                                                        whiten=remove_char,
+                                                        even_training=train_evenly)
 
 # Uncomment below if you would like to see what the net is going to train on.
 # see_samples(x_train, y_train, nSamples=20)
@@ -52,9 +48,12 @@ y_test = keras.utils.np_utils.to_categorical(y_test, num_classes)
 
 
 model = Sequential()
-model.add(Conv2D(32, kernel_size=(3, 3),
+
+model.add(Conv2D(32,
+                 kernel_size=(3, 3),
                  activation='relu',
                  input_shape=input_shape))
+
 model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
@@ -70,12 +69,16 @@ model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta(),
               metrics=['accuracy'])
 
-model.fit(x_train, y_train,
+model.fit(x_train,
+          y_train,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
           validation_data=(x_test, y_test))
-score = model.evaluate(x_test, y_test, verbose=False)
+
+score = model.evaluate(x_test,
+                       y_test,
+                       verbose=False)
 
 test_loss = 'Test loss:', score[0]
 test_acc = 'Test accuracy:', score[1]
